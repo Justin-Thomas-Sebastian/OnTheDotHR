@@ -14,9 +14,21 @@ public class Employee {
     @OneToMany(mappedBy = "supervisor")
     private List<Employee> employees;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Deliverable> deliverables;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supervisor")
+    private List<Deliverable> deliverablesCreated;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Appointment> appointments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "supervisor")
+    private List<Appointment> createdAppointments;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -139,5 +151,21 @@ public class Employee {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public List<Deliverable> getDeliverables() {
+        return deliverables;
+    }
+
+    public void setDeliverables(List<Deliverable> deliverables) {
+        this.deliverables = deliverables;
+    }
+
+    public List<Deliverable> getDeliverablesCreated() {
+        return deliverablesCreated;
+    }
+
+    public void setDeliverablesCreated(List<Deliverable> deliverablesCreated) {
+        this.deliverablesCreated = deliverablesCreated;
     }
 }
