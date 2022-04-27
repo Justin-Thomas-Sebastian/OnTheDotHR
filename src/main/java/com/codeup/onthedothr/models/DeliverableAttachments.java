@@ -16,4 +16,34 @@ public class DeliverableAttachments {
     @JoinColumn(name = "deliverable_id")
     private Deliverable deliverable;
 
+    public DeliverableAttachments(){}
+
+    public DeliverableAttachments(String fileUrl, Deliverable deliverable) {
+        this.fileUrl = fileUrl;
+        this.deliverable = deliverable;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public Deliverable getDeliverable() {
+        return deliverable;
+    }
+
+    public void setDeliverable(Deliverable deliverable) {
+        this.deliverable = deliverable;
+    }
 }

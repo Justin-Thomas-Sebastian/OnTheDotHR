@@ -54,6 +54,7 @@ public class Employee {
     @Column(nullable = false)
     private boolean isAdmin;
 
+    // Constructors
     public Employee(){}
 
     public Employee(String email, String username, String password, String firstName, String lastName) {
@@ -167,5 +168,21 @@ public class Employee {
 
     public void setDeliverablesCreated(List<Deliverable> deliverablesCreated) {
         this.deliverablesCreated = deliverablesCreated;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+    public List<Appointment> getCreatedAppointments() {
+        return createdAppointments;
+    }
+
+    public void setCreatedAppointments(List<Appointment> createdAppointments) {
+        this.createdAppointments = createdAppointments;
     }
 }
