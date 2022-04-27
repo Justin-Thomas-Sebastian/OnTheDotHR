@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/header.css">
+    <meta charset="UTF-8" />
+    <title>Sign up</title>
+</head>
+<body>
+<header th:replace="partials/partials.html :: header"></header>
+<h1>Create an account</h1>
+<!--<form th:action="@{/sign-up}" method="POST" th:object="${user}">-->
+<!--    <label for="username">Username</label>-->
+<!--    <input id="username" th:field="*{username}" />-->
+
+<!--    <label for="email">Email</label>-->
+<!--    <input id="email" th:field="*{email}" />-->
+
+<!--    <label for="password">Password</label>-->
+<!--    <input id="password" type="password" th:field="*{password}" />-->
+
+<!--    <input value="Sign me up!" type="submit" />-->
+<!--</form>-->
+
+<form th:action="@{/sign-up}" method="post">
+    <label for="fname">First name</label><br>
+    <input id="fname" name="fname" type="text"><br>
+
+    <label for="lname">Last name</label><br>
+    <input id="lname" name="lname" type="text"><br>
+
+    <label for="username">Username</label><br>
+    <input id="username" name="username" type="text"><br>
+
+    <label for="email">Email</label><br>
+    <input id="email" name="email" type="email"><br>
+
+    <label for="password">Password</label><br>
+    <input id="password" name="password" type="password"><br>
+
+    <label for="password2">Re-enter Password</label><br>
+    <input id="password2" name="password2" type="password"><br>
+
+    <input value="Sign Up" type="submit" />
+</form>
+</body>
+</html>
