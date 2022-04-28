@@ -9,6 +9,7 @@
 <body>
 <header th:replace="partials/partials.html :: header"></header>
 <h1>Profile</h1>
+
 <div sec:authorize="isAuthenticated()">
     Employee: <span th:text="${user.firstName}"/><span th:text="${user.lastName}"/><br>
     Username: <span th:text="${user.getUsername()}"/><br>

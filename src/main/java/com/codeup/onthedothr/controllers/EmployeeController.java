@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.List;
 
 @Controller
@@ -57,6 +56,7 @@ public class EmployeeController {
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // not logged in as a supervisor, return to employee dashboard
+        // regular employees should not be allowed to arbitrarily view other profiles through url
         if(!user.isSupervisor()){
             model.addAttribute("user", user);
             return "users/dashboard";
@@ -72,15 +72,14 @@ public class EmployeeController {
     public String showSupervisorDashboard(Model model){
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        // not logged in as a supervisor
+        // not logged in as a supervisor, return to employee dashboard
         if(!user.isSupervisor()){
             model.addAttribute("user", user);
             return "users/dashboard";
         }
 
-        // logged in as a supervisor
+        // logged in as a supervisor, proceed to supervisor dashboard
         List<Employee> employees = employeesDao.findAssignedEmployees(user.getId());
-        System.out.println(employees);
         model.addAttribute("user", user);
         model.addAttribute("employees", employees);
         return "users/supervisor-dashboard";

@@ -10,6 +10,7 @@
     <header th:replace="partials/partials.html :: header"></header>
     <h1>THIS IS SUPERVISOR DASHBOARD</h1>
 
+    <!-- List all assigned employees of logged in supervisor -->
     <div id="assigned-employees">
         <h1>My assigned employees</h1>
         <div th:each="employee: ${employees}">
@@ -21,6 +22,8 @@
             </form><br>
         </div>
     </div>
+
+    <!-- All employees should be listed here with search functionality -->
 
 </body>
 </html>

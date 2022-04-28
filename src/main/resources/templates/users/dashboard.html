@@ -11,6 +11,7 @@
     <h1>Dashboard</h1>
     <span th:text="${user.getFirstName()}"></span>&nbsp;<span th:text="${user.getLastName()}"></span><br>
 
+    <!-- Only show supervisor dashboard button to supervisors -->
     <div th:switch="${user.isSupervisor()}">
         <form th:case="${true}" method="get" action="/supervisor-dashboard">
             <input type="submit" value="Supervisor Dashboard">
@@ -18,6 +19,7 @@
         <span th:case="*"></span>
     </div>
 
+    <!-- Placeholder appt. requst form -->
     <form id="appointment-request" action="/appointment-request" method="post">
         <p>Supervisor name placeholder</p>
         <label for="reason">Reason for Appt.</label><br>
@@ -27,6 +29,7 @@
         <input type="submit" value="Submit Appt. Request">
     </form>
 
+    <!-- Placeholder employee deliverables section -->
     <div id="employee-deliverables">
         <h1>Deliverables</h1>
         <div id="deliverable-info">
