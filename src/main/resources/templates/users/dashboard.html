@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+    <header th:replace="partials/partials.html :: header"></header>
+    <h1>Dashboard</h1>
+    <form id="appointment-request" action="/appointment-request" method="post">
+        <p>Supervisor name placeholder</p>
+        <label for="reason">Reason for Appt.</label><br>
+        <input type="text" name="reason" id="reason"><br>
+        <label for="details">Additional details</label><br>
+        <textarea name="details" id="details" cols="30" rows="10"></textarea><br>
+        <input type="submit" value="Submit Appt. Request">
+    </form>
+
+    <div id="employee-deliverables">
+        <h1>Deliverables</h1>
+        <div id="deliverable-info">
+            <ul>
+                <li>Title</li>
+                <li>Description</li>
+                <li>Category</li>
+                <li>Status</li>
+                <li>Last Update</li>
+                <li>Deadline</li>
+                <form action="details" method="get">
+                    <input type="submit" value="details">
+                </form>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

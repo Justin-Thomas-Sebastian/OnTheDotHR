@@ -33,4 +33,14 @@ public class EmployeeController {
         employeesDao.save(employee);
         return "redirect:/login";
     }
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model){
+        return "users/dashboard";
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(Model model) {
+        return "users/profile";
+    }
 }

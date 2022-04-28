@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" href="/css/header.css">
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<header th:replace="partials/partials.html :: header"></header>
+<h1>Profile</h1>
+<div sec:authorize="isAuthenticated()">
+    Employee: <span th:text="${#authentication.principal.id}"/><br>
+    Username: <span th:text="${#authentication.principal.username}"/><br>
+    Email: <span th:text="${#authentication.principal.email}"/><br>
+</div>
+<a href="/dashboard">Return to dashboard</a>
+</body>
+</html>

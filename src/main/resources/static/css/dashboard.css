@@ -1,0 +1,8 @@
+#deliverable-info {
+    width: 100%;
+}
+
+#deliverable-info ul {
+    display: flex;
+    justify-content: space-between;
+}
