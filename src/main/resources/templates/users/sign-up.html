@@ -8,37 +8,25 @@
 <body>
 <header th:replace="partials/partials.html :: header"></header>
 <h1>Create an account</h1>
-<!--<form th:action="@{/sign-up}" method="POST" th:object="${user}">-->
-<!--    <label for="username">Username</label>-->
-<!--    <input id="username" th:field="*{username}" />-->
 
-<!--    <label for="email">Email</label>-->
-<!--    <input id="email" th:field="*{email}" />-->
-
-<!--    <label for="password">Password</label>-->
-<!--    <input id="password" type="password" th:field="*{password}" />-->
-
-<!--    <input value="Sign me up!" type="submit" />-->
-<!--</form>-->
-
-<form th:action="@{/sign-up}" method="post">
+<form th:action="@{/sign-up}" method="post" th:object="${employee}">
     <label for="fname">First name</label><br>
-    <input id="fname" name="fname" type="text"><br>
+    <input id="fname" th:field="*{firstName}"><br>
 
     <label for="lname">Last name</label><br>
-    <input id="lname" name="lname" type="text"><br>
+    <input id="lname" th:field="*{lastName}"><br>
 
     <label for="username">Username</label><br>
-    <input id="username" name="username" type="text"><br>
+    <input id="username" th:field="*{username}"><br>
 
     <label for="email">Email</label><br>
-    <input id="email" name="email" type="email"><br>
+    <input id="email" th:field="*{email}"><br>
 
     <label for="password">Password</label><br>
-    <input id="password" name="password" type="password"><br>
+    <input id="password" type="password" th:field="*{password}"><br>
 
-    <label for="password2">Re-enter Password</label><br>
-    <input id="password2" name="password2" type="password"><br>
+<!--    <label for="password2">Re-enter Password</label><br>-->
+<!--    <input id="password2" name="password2" type="password"><br>-->
 
     <input value="Sign Up" type="submit" />
 </form>

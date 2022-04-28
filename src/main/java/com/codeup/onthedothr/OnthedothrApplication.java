@@ -9,5 +9,4 @@ public class OnthedothrApplication {
     public static void main(String[] args) {
         SpringApplication.run(OnthedothrApplication.class, args);
     }
-
 }
