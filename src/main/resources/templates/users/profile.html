@@ -10,9 +10,9 @@
 <header th:replace="partials/partials.html :: header"></header>
 <h1>Profile</h1>
 <div sec:authorize="isAuthenticated()">
-    Employee: <span th:text="${#authentication.principal.id}"/><br>
-    Username: <span th:text="${#authentication.principal.username}"/><br>
-    Email: <span th:text="${#authentication.principal.email}"/><br>
+    Employee: <span th:text="${user.firstName}"/><span th:text="${user.lastName}"/><br>
+    Username: <span th:text="${user.getUsername()}"/><br>
+    Email: <span th:text="${user.getEmail()}"/><br>
 </div>
 <a href="/dashboard">Return to dashboard</a>
 </body>

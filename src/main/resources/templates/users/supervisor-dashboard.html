@@ -9,5 +9,18 @@
 <body>
     <header th:replace="partials/partials.html :: header"></header>
     <h1>THIS IS SUPERVISOR DASHBOARD</h1>
+
+    <div id="assigned-employees">
+        <h1>My assigned employees</h1>
+        <div th:each="employee: ${employees}">
+            <span th:text="${employee.firstName}"></span>
+            <span th:text="${employee.lastName}"></span>
+            <span th:text="${employee.email}"></span>
+            <form th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
+                <input type="submit" value="View Profile">
+            </form><br>
+        </div>
+    </div>
+
 </body>
 </html>

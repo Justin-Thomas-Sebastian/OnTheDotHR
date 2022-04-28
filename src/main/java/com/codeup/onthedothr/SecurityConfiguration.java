@@ -55,6 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/dashboard",
                         "/supervisor-dashboard",
+                        "/profile",
+                        "/profile/{id}",
                         "/details",
                         "/deliverables/create", // only authenticated users can create
                         "/deliverables/edit" // only authenticated users can edit
