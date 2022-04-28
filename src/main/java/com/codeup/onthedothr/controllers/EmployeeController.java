@@ -2,6 +2,7 @@ package com.codeup.onthedothr.controllers;
 
 import com.codeup.onthedothr.models.Employee;
 import com.codeup.onthedothr.repositories.EmployeeRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,10 @@ public class EmployeeController {
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model){
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(user.getUsername());
+        System.out.println(user.isSupervisor());
+        model.addAttribute("user", user);
         return "users/dashboard";
     }
 

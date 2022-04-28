@@ -9,6 +9,8 @@
 <body>
     <header th:replace="partials/partials.html :: header"></header>
     <h1>Dashboard</h1>
+    <h1 th:text="${user.getFirstName()} ${user.getLastName()}"></h1>
+
     <form id="appointment-request" action="/appointment-request" method="post">
         <p>Supervisor name placeholder</p>
         <label for="reason">Reason for Appt.</label><br>

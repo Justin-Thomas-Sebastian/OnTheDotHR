@@ -57,6 +57,7 @@ public class Employee {
     // Constructors
     public Employee(){}
 
+    // Sign-up Constructor (unused right now)
     public Employee(String email, String username, String password, String firstName, String lastName) {
         this.email = email;
         this.username = username;
@@ -65,12 +66,44 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    // Errything (unused right now)
+    public Employee(List<Employee> employees, List<Deliverable> deliverables, List<Deliverable> deliverablesCreated,
+                    Employee supervisor, List<Appointment> appointments, List<Appointment> createdAppointments,
+                    String email, String username, String password, String firstName, String lastName, String contactNo,
+                    boolean isSupervisor, boolean isAdmin) {
+        this.employees = employees;
+        this.deliverables = deliverables;
+        this.deliverablesCreated = deliverablesCreated;
+        this.supervisor = supervisor;
+        this.appointments = appointments;
+        this.createdAppointments = createdAppointments;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactNo = contactNo;
+        this.isSupervisor = isSupervisor;
+        this.isAdmin = isAdmin;
+    }
+
     // Copy Constructor
     public Employee(Employee copy){
         id = copy.id;
         email = copy.email;
         username = copy.username;
         password = copy.password;
+        firstName = copy.firstName;
+        lastName = copy.lastName;
+        contactNo = copy.contactNo;
+        isSupervisor = copy.isSupervisor;
+        isAdmin = copy.isAdmin;
+        employees = copy.employees;
+        deliverables = copy.deliverables;
+        deliverablesCreated = copy.deliverablesCreated;
+        supervisor = copy.supervisor;
+        appointments = copy.appointments;
+        createdAppointments = copy.createdAppointments;
     }
 
     // Getters and Setters
