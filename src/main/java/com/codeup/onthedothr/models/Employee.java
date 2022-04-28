@@ -65,6 +65,14 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    // Copy Constructor
+    public Employee(Employee copy){
+        id = copy.id;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+    }
+
     // Getters and Setters
     public long getId() {
         return id;
