@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
@@ -9,7 +9,14 @@
 <body>
     <header th:replace="partials/partials.html :: header"></header>
     <h1>Dashboard</h1>
-    <h1 th:text="${user.getFirstName()} ${user.getLastName()}"></h1>
+    <span th:text="${user.getFirstName()}"></span>&nbsp;<span th:text="${user.getLastName()}"></span><br>
+
+    <div th:switch="${user.isSupervisor()}">
+        <form th:case="${true}" method="get" action="/supervisor-dashboard">
+            <input type="submit" value="Supervisor Dashboard">
+        </form>
+        <span th:case="*"></span>
+    </div>
 
     <form id="appointment-request" action="/appointment-request" method="post">
         <p>Supervisor name placeholder</p>

@@ -38,8 +38,6 @@ public class EmployeeController {
     @GetMapping("/dashboard")
     public String showDashboard(Model model){
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(user.getUsername());
-        System.out.println(user.isSupervisor());
         model.addAttribute("user", user);
         return "users/dashboard";
     }
@@ -47,5 +45,16 @@ public class EmployeeController {
     @GetMapping("/profile")
     public String showProfile(Model model) {
         return "users/profile";
+    }
+
+    @GetMapping("/supervisor-dashboard")
+    public String showSupervisorDashboard(Model model){
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(!user.isSupervisor()){
+            model.addAttribute("user", user);
+            return "users/dashboard";
+        }
+        model.addAttribute("user", user);
+        return "users/supervisor-dashboard";
     }
 }
