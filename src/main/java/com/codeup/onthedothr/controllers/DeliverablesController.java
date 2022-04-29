@@ -14,7 +14,6 @@ import java.util.List;
 
 @Controller
 public class DeliverablesController {
-
     private final EmployeeRepository employeesDao;
     private final DeliverablesRepository deliverablesDao;
 
@@ -29,7 +28,7 @@ public class DeliverablesController {
     }
 
     @GetMapping("/deliverables/{id}")
-    public String getDeliverablesById(@PathVariable long id, Model model){
+    public String getDeliverablesById(@PathVariable Long id, Model model){
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // not logged in as a supervisor, return to employee dashboard
@@ -44,8 +43,12 @@ public class DeliverablesController {
         model.addAttribute("deliverables", deliverables);
         model.addAttribute("employee", employee);
         return "/deliverables/show";
-
     }
 
-
+    @GetMapping("/deliverables/{id}/create")
+    public String getCreateDeliverablesForm(@PathVariable Long id, Model model){
+        Employee employee = employeesDao.getById(id);
+        model.addAttribute("employee", employee);
+        return "deliverables/create";
+    }
 }

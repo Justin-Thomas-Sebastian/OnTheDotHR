@@ -29,6 +29,9 @@
             </form>
 
             <!-- Create a new deliverable and assign to employee -->
+            <form style="display:inline;" th:action="@{/deliverables/{id}/create(id=${employee.id})}" method="get">
+                <input type="submit" value="New Task">
+            </form>
         </div>
     </div>
 
