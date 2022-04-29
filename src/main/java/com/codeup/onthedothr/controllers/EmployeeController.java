@@ -1,6 +1,8 @@
 package com.codeup.onthedothr.controllers;
 
+import com.codeup.onthedothr.models.Deliverable;
 import com.codeup.onthedothr.models.Employee;
+import com.codeup.onthedothr.repositories.DeliverablesRepository;
 import com.codeup.onthedothr.repositories.EmployeeRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,12 @@ public class EmployeeController {
 
     private final EmployeeRepository employeesDao;
     private final PasswordEncoder passwordEncoder;
+    private final DeliverablesRepository deliverablesDao;
 
-    public EmployeeController(EmployeeRepository employeesDao, PasswordEncoder passwordEncoder) {
+    public EmployeeController(EmployeeRepository employeesDao, PasswordEncoder passwordEncoder, DeliverablesRepository deliverablesDao) {
         this.employeesDao = employeesDao;
         this.passwordEncoder = passwordEncoder;
+        this.deliverablesDao = deliverablesDao;
     }
 
     @GetMapping("/sign-up")
@@ -40,7 +44,9 @@ public class EmployeeController {
     @GetMapping("/dashboard")
     public String showDashboard(Model model){
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(user.getId());
         model.addAttribute("user", user);
+        model.addAttribute("deliverables", deliverables);
         return "users/dashboard";
     }
 

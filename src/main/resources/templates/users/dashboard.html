@@ -29,21 +29,13 @@
         <input type="submit" value="Submit Appt. Request">
     </form>
 
-    <!-- Placeholder employee deliverables section -->
+    <!-- Employee current deliverables section -->
     <div id="employee-deliverables">
         <h1>Deliverables</h1>
-        <div id="deliverable-info">
-            <ul>
-                <li>Title</li>
-                <li>Description</li>
-                <li>Category</li>
-                <li>Status</li>
-                <li>Last Update</li>
-                <li>Deadline</li>
-                <form action="details" method="get">
-                    <input type="submit" value="details">
-                </form>
-            </ul>
+        <div sec:authorize="isAuthenticated()" th:each="deliverable : ${deliverables}">
+            <span th:text="${deliverable.id}"></span>
+            <span th:text="${deliverable.title}"></span>
+            <span th:text="${deliverable.description}"></span>
         </div>
     </div>
 </body>
