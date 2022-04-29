@@ -45,7 +45,7 @@ public class Employee {
     @Column(nullable = false, length = 100)
     private String lastName;
 
-    @Column(nullable = true, length = 15)
+    @Column(nullable = false, length = 15)
     private String contactNo;
 
     @Column(nullable = false)
@@ -58,12 +58,13 @@ public class Employee {
     public Employee(){}
 
     // Sign-up Constructor (unused right now)
-    public Employee(String email, String username, String password, String firstName, String lastName) {
+    public Employee(String email, String username, String password, String firstName, String lastName, String contactNo) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.contactNo = contactNo;
     }
 
     // Errything (unused right now)

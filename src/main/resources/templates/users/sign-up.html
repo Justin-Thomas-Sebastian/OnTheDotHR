@@ -5,29 +5,23 @@
     <meta charset="UTF-8" />
     <title>Sign up</title>
 </head>
+
 <body>
 <header th:replace="partials/partials.html :: header"></header>
 <h1>Create an account</h1>
-
 <form th:action="@{/sign-up}" method="post" th:object="${employee}">
     <label for="fname">First name</label><br>
-    <input id="fname" th:field="*{firstName}"><br>
-
+    <input id="fname" th:field="*{firstName}" required><br>
     <label for="lname">Last name</label><br>
-    <input id="lname" th:field="*{lastName}"><br>
-
+    <input id="lname" th:field="*{lastName}" required><br>
     <label for="username">Username</label><br>
-    <input id="username" th:field="*{username}"><br>
-
+    <input id="username" th:field="*{username}" required><br>
     <label for="email">Email</label><br>
-    <input id="email" th:field="*{email}"><br>
-
+    <input id="email" th:field="*{email}" required><br>
     <label for="password">Password</label><br>
-    <input id="password" type="password" th:field="*{password}"><br>
-
-<!--    <label for="password2">Re-enter Password</label><br>-->
-<!--    <input id="password2" name="password2" type="password"><br>-->
-
+    <input id="password" type="password" th:field="*{password}" required><br>
+    <label for="contactNo">Contact No.</label><br>
+    <input id="contactNo" th:field="*{contactNo}" required><br>
     <input value="Sign Up" type="submit" />
 </form>
 </body>
