@@ -6,10 +6,18 @@
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/header.css">
 </head>
-<body>
+<body sec:authorize="isAuthenticated()">
     <header th:replace="partials/partials.html :: header"></header>
     <h1>Dashboard</h1>
     <span th:text="${user.getFirstName()}"></span>&nbsp;<span th:text="${user.getLastName()}"></span><br>
+    <div th:switch="${supervisor == null}">
+        <span th:case="${true}"></span>
+        <span th:case="*">
+            <span>Supervisor: </span>
+            <span th:text="${supervisor.getFirstName()}"></span>&nbsp;
+            <span th:text="${supervisor.getLastName()}"></span><br>
+        </span>
+    </div>
 
     <!-- Only show supervisor dashboard button to supervisors -->
     <div th:switch="${user.isSupervisor()}">
@@ -21,7 +29,6 @@
 
     <!-- Placeholder appt. requst form -->
     <form id="appointment-request" action="/appointment-request" method="post">
-        <p>Supervisor name placeholder</p>
         <label for="reason">Reason for Appt.</label><br>
         <input type="text" name="reason" id="reason"><br>
         <label for="details">Additional details</label><br>
@@ -32,10 +39,17 @@
     <!-- Employee current deliverables section -->
     <div id="employee-deliverables">
         <h1>Deliverables</h1>
-        <div sec:authorize="isAuthenticated()" th:each="deliverable : ${deliverables}">
+        <div th:switch="${deliverables.isEmpty()}">
+            <span th:case="${true}">You are all caught up!</span>
+            <span th:case="${false}">You got stuff to do!</span>
+            <span th:case="*">Should not run</span>
+        </div>
+        <div th:each="deliverable : ${deliverables}">
             <span th:text="${deliverable.id}"></span>
             <span th:text="${deliverable.title}"></span>
             <span th:text="${deliverable.description}"></span>
+            <span th:text="${deliverable.dateCreated}"></span>
+            <span th:text="${deliverable.deadline}"></span>
         </div>
     </div>
 </body>

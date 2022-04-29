@@ -45,6 +45,12 @@ public class EmployeeController {
     public String showDashboard(Model model){
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(user.getId());
+        Long supervisorId = employeesDao.getSupervisorIdById(user.getId());
+        Employee supervisor = null;
+        if(!(supervisorId == null)){
+            supervisor = employeesDao.getById(supervisorId);
+        }
+        model.addAttribute("supervisor", supervisor);
         model.addAttribute("user", user);
         model.addAttribute("deliverables", deliverables);
         return "users/dashboard";

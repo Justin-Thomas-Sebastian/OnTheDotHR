@@ -11,4 +11,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query(value = "SELECT * FROM employees WHERE supervisor_id = ?1", nativeQuery = true)
     List<Employee> findAssignedEmployees(long supervisorId);
+
+    @Query(value = "SELECT supervisor_id FROM employees WHERE id = ?1", nativeQuery = true)
+    Long getSupervisorIdById(Long id);
 }
