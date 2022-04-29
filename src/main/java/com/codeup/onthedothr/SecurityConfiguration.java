@@ -58,6 +58,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/profile",
                         "/profile/{id}",
                         "/details",
+                        "/deliverables/{id}",
+                        "/deliverables/show",
                         "/deliverables/create", // only authenticated users can create
                         "/deliverables/edit" // only authenticated users can edit
                 )

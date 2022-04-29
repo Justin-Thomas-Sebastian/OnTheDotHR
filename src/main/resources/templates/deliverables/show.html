@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" href="/css/header.css">
+    <meta charset="UTF-8">
+    <title>Deliverables</title>
+</head>
+
+<body>
+<header th:replace="partials/partials.html :: header"></header>
+<h1>Deliverables read only</h1>
+<div sec:authorize="isAuthenticated()">
+    Employee: <span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span><br>
+    Username: <span th:text="${employee.getUsername()}"></span><br>
+    Email: <span th:text="${employee.getEmail()}"></span><br>
+</div>
+<div sec:authorize="isAuthenticated()" th:each="deliverable : ${deliverables}">
+    <span th:text="${deliverable.id}"></span>
+    <span th:text="${deliverable.title}"></span>
+    <span th:text="${deliverable.description}"></span>
+</div>
+
+</body>
+</html>

@@ -17,9 +17,18 @@
             <span th:text="${employee.firstName}"></span>
             <span th:text="${employee.lastName}"></span>
             <span th:text="${employee.email}"></span>
-            <form th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
+
+            <!-- View employee's profile -->
+            <form style="display:inline;" th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
                 <input type="submit" value="View Profile">
-            </form><br>
+            </form>
+
+            <!-- View employees current deliverables -->
+            <form style="display:inline;" th:action="@{/deliverables/{id}(id=${employee.id})}" th:method="get">
+                <input type="submit" value="Current Deliverables">
+            </form>
+
+            <!-- Create a new deliverable and assign to employee -->
         </div>
     </div>
 
