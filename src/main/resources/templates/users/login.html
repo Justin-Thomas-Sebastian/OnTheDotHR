@@ -10,7 +10,7 @@
 <header th:replace="partials/partials.html :: header"></header>
 <h1>LOGIN to OnTheDotHR</h1>
 <div th:if="${param.error}">
-    Invalid Username and Password.
+    Invalid Username or Password.
 </div>
 <div th:if="${param.logout}">
     You have been logged out.
@@ -18,13 +18,11 @@
 
 <form th:action="@{/login}" method="post">
     <label for="username">Username</label><br>
-    <input id="username" name="username" type="text" /><br>
-
+    <input id="username" name="username" type="text" required><br>
     <label for="password">Password</label><br>
-    <input id="password" name="password" type="password" /><br>
-
+    <input id="password" name="password" type="password" required><br>
     <a href="#">Forgot your password?</a>
-    <input type="submit" value="Log In" />
+    <input type="submit" value="Log In">
 </form>
 
 <form action="/sign-up" method="get">
