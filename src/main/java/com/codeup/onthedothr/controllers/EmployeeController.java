@@ -92,8 +92,10 @@ public class EmployeeController {
 
         // logged in as a supervisor, proceed to supervisor dashboard
         List<Employee> employees = employeesDao.findAssignedEmployees(user.getId());
+        List<Employee> allEmployees = employeesDao.findAll();
         model.addAttribute("user", user);
         model.addAttribute("employees", employees);
+        model.addAttribute("allEmployees", allEmployees);
         return "users/supervisor-dashboard";
     }
 }
