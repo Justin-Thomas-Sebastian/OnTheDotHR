@@ -41,8 +41,7 @@
         <h1>Deliverables</h1>
         <div th:switch="${deliverables.isEmpty()}">
             <span th:case="${true}">You are all caught up!</span>
-            <span th:case="${false}">You got stuff to do!</span>
-            <span th:case="*">Should not run</span>
+            <span th:case="*">You got stuff to do!</span>
         </div>
         <div th:each="deliverable : ${deliverables}">
             <span th:text="${deliverable.id}"></span>

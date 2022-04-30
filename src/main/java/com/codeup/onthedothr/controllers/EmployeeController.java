@@ -56,9 +56,10 @@ public class EmployeeController {
             return "users/dashboard";
         }
 
-        // View employee's profile as supervisor
+        // View employee's profile from supervisor dashboard
         user = employeesDao.getById(id);
         model.addAttribute("user", user);
+        model.addAttribute("isSupervisor", true); // used to alter return link to "Return to supervisor dashboard"
         return "users/profile";
     }
 }

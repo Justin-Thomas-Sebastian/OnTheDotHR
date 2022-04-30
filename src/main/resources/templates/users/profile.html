@@ -6,15 +6,23 @@
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
-<body>
+<body sec:authorize="isAuthenticated()">
 <header th:replace="partials/partials.html :: header"></header>
 <h1>Profile</h1>
 
-<div sec:authorize="isAuthenticated()">
-    Employee: <span th:text="${user.firstName}"/><span th:text="${user.lastName}"/><br>
-    Username: <span th:text="${user.getUsername()}"/><br>
-    Email: <span th:text="${user.getEmail()}"/><br>
+<div>
+    Employee: <span th:text="${user.firstName}"></span>&nbsp;<span th:text="${user.lastName}"></span><br>
+    Username: <span th:text="${user.getUsername()}"></span><br>
+    Email: <span th:text="${user.getEmail()}"></span><br>
 </div>
-<a href="/dashboard">Return to dashboard</a>
+
+<!-- If a profile is accessed from 'view profile' button in supervisor dashboard,
+ return link should go back to supervisor dashboard.
+ For all other cases, return to dashboard -->
+<div th:switch="${isSupervisor} == true">
+    <a th:case="${true}" href="/supervisor-dashboard">Return to supervisor dashboard</a>
+    <a th:case="*" href="/dashboard">Return to dashboard</a>
+</div>
+
 </body>
 </html>
