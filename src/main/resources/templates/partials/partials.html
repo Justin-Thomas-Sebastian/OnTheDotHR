@@ -10,7 +10,7 @@
 <!-- HEADER FRAGMENT -->
 <header th:fragment="header">
     <a href="#">Burger</a>
-    <h1>LOGO</h1>
+    <h1><a href="/dashboard">LOGO</a></h1>
     <div sec:authorize="!isAuthenticated()">
         <a href="/login">Login</a>
     </div>

@@ -1,8 +1,6 @@
 package com.codeup.onthedothr.controllers;
 
-import com.codeup.onthedothr.models.Deliverable;
 import com.codeup.onthedothr.models.Employee;
-import com.codeup.onthedothr.models.Status;
 import com.codeup.onthedothr.repositories.DeliverablesRepository;
 import com.codeup.onthedothr.repositories.EmployeeRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import java.util.List;
 
 @Controller
 public class EmployeeController {
@@ -41,24 +38,6 @@ public class EmployeeController {
         return "redirect:/login";
     }
 
-    @GetMapping("/dashboard")
-    public String showDashboard(Model model){
-        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(user.getId());
-        Long supervisorId = employeesDao.getSupervisorIdById(user.getId());
-        Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with current deliverable's status_id
-
-        Employee supervisor = null;
-        if(!(supervisorId == null)){
-            supervisor = employeesDao.getById(supervisorId);
-        }
-        model.addAttribute("supervisor", supervisor);
-        model.addAttribute("user", user);
-        model.addAttribute("deliverables", deliverables);
-        model.addAttribute("status", status);
-        return "users/dashboard";
-    }
-
     @GetMapping("/profile")
     public String showProfile(Model model) {
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -81,24 +60,5 @@ public class EmployeeController {
         user = employeesDao.getById(id);
         model.addAttribute("user", user);
         return "users/profile";
-    }
-
-    @GetMapping("/supervisor-dashboard")
-    public String showSupervisorDashboard(Model model){
-        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // not logged in as a supervisor, return to employee dashboard
-        if(!user.isSupervisor()){
-            model.addAttribute("user", user);
-            return "users/dashboard";
-        }
-
-        // logged in as a supervisor, proceed to supervisor dashboard
-        List<Employee> employees = employeesDao.findAssignedEmployees(user.getId());
-        List<Employee> allEmployees = employeesDao.findAll();
-        model.addAttribute("user", user);
-        model.addAttribute("employees", employees);
-        model.addAttribute("allEmployees", allEmployees);
-        return "users/supervisor-dashboard";
     }
 }
