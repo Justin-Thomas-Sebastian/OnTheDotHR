@@ -50,6 +50,7 @@
             <span th:text="${deliverable.description}"></span>
             <span th:text="${deliverable.dateCreated}"></span>
             <span th:text="${deliverable.deadline}"></span>
+            <span th:with="status = ${deliverable.getStatus()}" th:text="${status.getStatusName()}"></span>
         </div>
     </div>
 </body>

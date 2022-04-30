@@ -7,19 +7,21 @@
     <title>Deliverables</title>
 </head>
 
-<body>
+<body sec:authorize="isAuthenticated()">
 <header th:replace="partials/partials.html :: header"></header>
 <h1>Deliverables read only</h1>
-<div sec:authorize="isAuthenticated()">
+<div>
     Employee: <span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span><br>
     Username: <span th:text="${employee.getUsername()}"></span><br>
     Email: <span th:text="${employee.getEmail()}"></span><br>
 </div>
-<div sec:authorize="isAuthenticated()" th:each="deliverable : ${deliverables}">
+<div th:each="deliverable : ${deliverables}">
     <span th:text="${deliverable.id}"></span>
     <span th:text="${deliverable.title}"></span>
     <span th:text="${deliverable.description}"></span>
+    <span th:with="status = ${deliverable.getStatus()}" th:text="${status.getStatusName()}"></span>
 </div>
+<a href="/supervisor-dashboard">Return to Supervisor Dashboard</a>
 
 </body>
 </html>

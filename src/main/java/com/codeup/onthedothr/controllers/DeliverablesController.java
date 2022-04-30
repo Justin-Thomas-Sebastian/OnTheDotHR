@@ -2,6 +2,7 @@ package com.codeup.onthedothr.controllers;
 
 import com.codeup.onthedothr.models.Deliverable;
 import com.codeup.onthedothr.models.Employee;
+import com.codeup.onthedothr.models.Status;
 import com.codeup.onthedothr.repositories.DeliverablesRepository;
 import com.codeup.onthedothr.repositories.EmployeeRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,9 +40,11 @@ public class DeliverablesController {
 
         // logged in as a supervisor, proceed to employee's current deliverables
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(id);
+        Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with current deliverable's status_id
         Employee employee = employeesDao.getById(id);
         model.addAttribute("deliverables", deliverables);
         model.addAttribute("employee", employee);
+        model.addAttribute("status", status);
         return "/deliverables/show";
     }
 
