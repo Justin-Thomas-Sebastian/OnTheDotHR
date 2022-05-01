@@ -46,10 +46,6 @@
             <form style="display:inline;" th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
                 <input type="submit" value="View Profile">
             </form>
-            <!-- View employees current deliverables -->
-            <form style="display:inline;" th:action="@{/deliverables/{id}(id=${employee.id})}" th:method="get">
-                <input type="submit" value="Current Deliverables">
-            </form>
         </div>
     </div>
 </body>

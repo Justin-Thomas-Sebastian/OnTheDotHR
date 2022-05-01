@@ -19,6 +19,7 @@
     <span th:text="${deliverable.id}"></span>
     <span th:text="${deliverable.title}"></span>
     <span th:text="${deliverable.description}"></span>
+    <span th:with="category = ${deliverable.getCategory()}" th:text="${category.getCategoryName()}"></span>
     <span th:with="status = ${deliverable.getStatus()}" th:text="${status.getStatusName()}"></span>
 </div>
 <a href="/supervisor-dashboard">Return to supervisor dashboard</a>

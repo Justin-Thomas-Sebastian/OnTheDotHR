@@ -1,5 +1,6 @@
 package com.codeup.onthedothr.controllers;
 
+import com.codeup.onthedothr.models.Category;
 import com.codeup.onthedothr.models.Deliverable;
 import com.codeup.onthedothr.models.Employee;
 import com.codeup.onthedothr.models.Status;
@@ -28,7 +29,8 @@ public class DashboardController {
         // Initialize Java objects from database
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(user.getId());
         Long supervisorId = employeesDao.getSupervisorIdById(user.getId());
-        Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with current deliverable's status_id
+        Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with status_id
+        Category category = new Category(); // Send empty Category object to view, so getCategory() can be called with category_id
 
         // If employee is assigned a supervisor, retrieve that supervisor
         Employee supervisor = null;
@@ -41,6 +43,7 @@ public class DashboardController {
         model.addAttribute("user", user);
         model.addAttribute("deliverables", deliverables);
         model.addAttribute("status", status);
+        model.addAttribute("category", category);
         return "users/dashboard";
     }
 

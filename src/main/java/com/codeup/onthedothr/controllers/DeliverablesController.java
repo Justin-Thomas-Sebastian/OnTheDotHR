@@ -1,5 +1,6 @@
 package com.codeup.onthedothr.controllers;
 
+import com.codeup.onthedothr.models.Category;
 import com.codeup.onthedothr.models.Deliverable;
 import com.codeup.onthedothr.models.Employee;
 import com.codeup.onthedothr.models.Status;
@@ -40,11 +41,15 @@ public class DeliverablesController {
 
         // logged in as a supervisor, proceed to employee's current deliverables
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(id);
-        Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with current deliverable's status_id
+        Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with status_id
+        Category category = new Category(); // Send empty Category object to view, so getCategory() can be called with category_id
         Employee employee = employeesDao.getById(id);
+
+        // Pass data objects to show.html
         model.addAttribute("deliverables", deliverables);
         model.addAttribute("employee", employee);
         model.addAttribute("status", status);
+        model.addAttribute("category", category);
         return "/deliverables/show";
     }
 
