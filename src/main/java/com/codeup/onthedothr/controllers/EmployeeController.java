@@ -52,8 +52,7 @@ public class EmployeeController {
         // not logged in as a supervisor, return to employee dashboard
         // regular employees should not be allowed to arbitrarily view other profiles through url
         if(!user.isSupervisor()){
-            model.addAttribute("user", user);
-            return "users/dashboard";
+            return "redirect:/dashboard";
         }
 
         // View employee's profile from supervisor dashboard

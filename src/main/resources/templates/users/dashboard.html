@@ -10,6 +10,8 @@
     <header th:replace="partials/partials.html :: header"></header>
     <h1>Dashboard</h1>
     <span th:text="${user.getFirstName()}"></span>&nbsp;<span th:text="${user.getLastName()}"></span><br>
+
+    <!-- If user has a supervisor, display that supervisor's name -->
     <div th:switch="${supervisor == null}">
         <span th:case="${true}"></span>
         <span th:case="*">
