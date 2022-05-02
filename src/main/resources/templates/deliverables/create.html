@@ -12,5 +12,92 @@
 <!-- FORM TO CREATE NEW DELIVERABLE AND ASSIGN TO EMPLOYEE -->
 <h1>New task for <span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span></h1>
 
+<form id="new-task-form">
+    <!-- Title -->
+    <label for="title">Title</label><br>
+    <input id="title" name="title" type="text"><br>
+
+    <!-- Category --->
+    <label for="category">Category</label><br>
+    <input id="category" name="category" type="input"><br>
+
+    <!-- Description --->
+    <label for="description">Description</label><br>
+    <textarea id="description" name="description" cols="30" rows="10"></textarea><br>
+
+    <!-- Deadline --->
+    <label for="deadline"></label><br>
+    <input id="deadline" name="deadline" type="date"><br>
+
+    <!-- Upload Files--->
+    <h3>Upload Files</h3>
+    <div id="new-files">
+        <button id="file-picker">Attach</button><br>
+    </div>
+
+    <input type="submit" value="Create new Task ">
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/js/keys.js"></script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script>
+    const client = filestack.init(FILESTACK_KEY);
+    const filePicker = document.getElementById("file-picker");
+    const options = {
+        fromSources: ["local_file_system","url","googledrive"],
+        maxFiles: 5,
+        onUploadDone(files){
+            for(let i = 0; i < files.filesUploaded.length; i++){
+                let file = files.filesUploaded[i];
+
+                // create html input elements
+                const inputContainer = document.createElement("div");
+                const inputFileUrl = document.createElement("input");
+                const inputFileName = document.createElement("input");
+                const breakTag = document.createElement("br")
+                const deleteButton = document.createElement("button");
+
+                // set html input attributes
+                inputContainer.setAttribute("class", "file-input-container");
+                inputFileName.setAttribute("type", "text");
+                inputFileName.setAttribute("id", `filename${i + 1}`);
+                inputFileName.setAttribute("name", `filename${i + 1}`);
+                inputFileUrl.setAttribute("type", "text");
+                inputFileUrl.setAttribute("id", `fileurl${i + 1}`);
+                inputFileUrl.setAttribute("name", `fileurl${i + 1}`);
+                deleteButton.setAttribute("class", "delete-button");
+                deleteButton.innerText = "Delete";
+
+                // set data into html input elements
+                inputFileName.value = file.filename;
+                inputFileUrl.value = file.url;
+                inputFileName.setAttribute("readonly", "true");
+                inputFileUrl.setAttribute("readonly", "true");
+
+                // add html input elements to new-files <div>
+                const newFiles = document.getElementById("new-files");
+                inputContainer.appendChild(inputFileName);
+                inputContainer.appendChild(inputFileUrl);
+                inputContainer.appendChild(deleteButton);
+                inputContainer.appendChild(breakTag);
+                newFiles.appendChild(inputContainer);
+
+                // Deletes inputContainer and its children
+                $(".delete-button").click(function(){
+                    $(this).parent().remove();
+                });
+            }
+        }
+    };
+
+    const picker = client.picker(options);
+
+    filePicker.addEventListener('click', function(e){
+        e.preventDefault();
+        picker.open();
+    });
+
+</script>
 </body>
 </html>
