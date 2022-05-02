@@ -6,7 +6,7 @@
     <title>Create deliverable</title>
 </head>
 
-<body>
+<body sec:authorize="isAuthenticated()">
 <header th:replace="partials/partials.html :: header"></header>
 
 <!-- FORM TO CREATE NEW DELIVERABLE AND ASSIGN TO EMPLOYEE -->
@@ -97,7 +97,6 @@
         e.preventDefault();
         picker.open();
     });
-
 </script>
 </body>
 </html>

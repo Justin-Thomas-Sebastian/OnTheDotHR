@@ -49,7 +49,7 @@ public class DashboardController {
 
     @GetMapping("/supervisor-dashboard")
     public String showSupervisorDashboard(Model model){
-        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Currently logged-in user
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Current logged-in user
 
         // If not logged in as a supervisor, return to employee dashboard
         if(!user.isSupervisor()){
