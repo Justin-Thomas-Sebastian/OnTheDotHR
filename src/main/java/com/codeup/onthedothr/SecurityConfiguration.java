@@ -53,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
+                        // only authenticated users
                         "/dashboard",
                         "/supervisor-dashboard",
                         "/profile",
@@ -60,8 +61,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/details",
                         "/deliverables/{id}",
                         "/deliverables/show",
-                        "/deliverables/create", // only authenticated users can create
-                        "/deliverables/edit" // only authenticated users can edit
+                        "/deliverables/create",
+                        "/deliverables/{id}/create",
+                        "/deliverables/edit"
                 )
                 .authenticated()
         ;

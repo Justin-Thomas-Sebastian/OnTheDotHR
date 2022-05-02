@@ -12,22 +12,25 @@
 <!-- FORM TO CREATE NEW DELIVERABLE AND ASSIGN TO EMPLOYEE -->
 <h1>New task for <span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span></h1>
 
-<form id="new-task-form">
+<form id="new-task-form" th:action="@{/deliverables/{id}/create(id=${employee.id})}" th:object="${deliverable}" method="post">
     <!-- Title -->
     <label for="title">Title</label><br>
-    <input id="title" name="title" type="text"><br>
+    <input id="title" name="title" type="text" required><br>
 
     <!-- Category --->
-    <label for="category">Category</label><br>
-    <input id="category" name="category" type="input"><br>
+    <label for="categorySelect">Category</label><br>
+    <select name="categorySelect" id="categorySelect" required>
+        <option value="" selected disabled hidden>Select category</option>
+        <option th:each="option : ${categoryOptions}" th:value="${option}" th:text="${option}"></option>
+    </select><br>
 
     <!-- Description --->
     <label for="description">Description</label><br>
-    <textarea id="description" name="description" cols="30" rows="10"></textarea><br>
+    <textarea id="description" name="description" cols="30" rows="10" required></textarea><br>
 
     <!-- Deadline --->
     <label for="deadline"></label><br>
-    <input id="deadline" name="deadline" type="date"><br>
+    <input id="deadline" name="deadline" type="date" required><br>
 
     <!-- Upload Files--->
     <h3>Upload Files</h3>

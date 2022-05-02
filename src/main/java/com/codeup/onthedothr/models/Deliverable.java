@@ -13,11 +13,11 @@ public class Deliverable {
     private long id;
 
     @ManyToOne
-    @JoinColumn (name = "employee_id")
+    @JoinColumn (name = "employee_id", nullable = false)
     private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supervisor_id")
+    @JoinColumn(name = "supervisor_id", nullable = false)
     private Employee supervisor;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deliverable")
