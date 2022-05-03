@@ -49,6 +49,9 @@
             <span th:text="${deliverable.deadline}"></span>
             <span th:with="category = ${deliverable.getCategory()}" th:text="${category.getCategoryName()}"></span>
             <span th:with="status = ${deliverable.getStatus()}" th:text="${status.getStatusName()}"></span>
+            <form style="display: inline;" action="/details" method="get">
+                <input type="submit" value="Details">
+            </form>
         </div>
     </div>
 </body>
