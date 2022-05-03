@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/header.css">
+    <title>Request Appointment</title>
+</head>
+
+<body sec:authorize="isAuthenticated()">
+    <header th:replace="partials/partials.html :: header"></header>
+    <form id="appointment-request" th:action="@{/request-appointment}" method="post">
+        <label for="reason">Reason for Appt.</label><br>
+        <input type="text" name="reason" id="reason"><br>
+        <label for="details">Additional details</label><br>
+        <textarea name="details" id="details" cols="30" rows="10"></textarea><br>
+        <input type="submit" value="Submit Appointment Request">
+        <a href="/dashboard">Return to dashboard</a><br>
+        <p th:text="${feedback}"></p>
+    </form>
+</body>
+</html>

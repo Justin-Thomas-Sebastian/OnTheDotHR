@@ -29,13 +29,9 @@
         <span th:case="*"></span>
     </div>
 
-    <!-- Placeholder appt. requst form -->
-    <form id="appointment-request" action="/appointment-request" method="post">
-        <label for="reason">Reason for Appt.</label><br>
-        <input type="text" name="reason" id="reason"><br>
-        <label for="details">Additional details</label><br>
-        <textarea name="details" id="details" cols="30" rows="10"></textarea><br>
-        <input type="submit" value="Submit Appt. Request">
+    <!-- Button to request an appointment -->
+    <form action="/request-appointment" method="get">
+        <input type="submit" value="Request Appointment">
     </form>
 
     <!-- Employee current deliverables section -->
