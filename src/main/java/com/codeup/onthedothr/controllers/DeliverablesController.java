@@ -81,7 +81,25 @@ public class DeliverablesController {
             @RequestParam(name = "title") String title,
             @RequestParam(name = "categorySelect") String categorySelect,
             @RequestParam(name = "description") String description,
+            @RequestParam(name = "filename1") String filename1,
+            @RequestParam(name = "filename2") String filename2,
+            @RequestParam(name = "filename3") String filename3,
+            @RequestParam(name = "filename4") String filename4,
+            @RequestParam(name = "filename5") String filename5,
+            @RequestParam(name = "fileurl1") String fileurl1,
+            @RequestParam(name = "fileurl2") String fileurl2,
+            @RequestParam(name = "fileurl3") String fileurl3,
+            @RequestParam(name = "fileurl4") String fileurl4,
+            @RequestParam(name = "fileurl5") String fileurl5,
             @RequestParam(name = "deadline") String deadline) throws ParseException {
+
+        // testing files
+        System.out.println(filename1);
+        System.out.println(filename3);
+        System.out.println(filename2);
+        System.out.println(fileurl5);
+        System.out.println(fileurl1);
+        System.out.println(fileurl2);
 
         // Transform data from form into the format that the database requires
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -105,7 +123,7 @@ public class DeliverablesController {
         return "redirect:/supervisor-dashboard";
     }
 
-    // Utility method used to return category names. Used in an HTML select tag to display category names alongside categoryID
+    // Utility method used to return category names. Used in an HTML select tag to display category names alongside categoryId
     public List<String> getCategoriesAsList(){
         List<String> categoryOptions = new ArrayList<>();
         categoryOptions.add("1 - Onboarding");

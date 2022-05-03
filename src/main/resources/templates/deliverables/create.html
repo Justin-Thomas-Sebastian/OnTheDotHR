@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/header.css">
+    <style>
+        .show {
+            display: block;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
     <title>Create deliverable</title>
 </head>
 
@@ -35,6 +44,31 @@
     <!-- Upload Files--->
     <h3>Upload Files</h3>
     <div id="new-files">
+        <div class="file-input-container hide">
+            <input id="filename1" name="filename1" type="text" class="file-name-input" readonly>
+            <input id="fileurl1" name="fileurl1" type="text" class="file-url-input" readonly>
+            <button class="delete-button">Remove</button>
+        </div>
+        <div class="file-input-container hide">
+            <input id="filename2" name="filename2" type="text" class="file-name-input" readonly>
+            <input id="fileurl2" name="fileurl2" type="text" class="file-url-input" readonly>
+            <button class="delete-button">Remove</button>
+        </div>
+        <div class="file-input-container hide">
+            <input id="filename3" name="filename3" type="text" class="file-name-input" readonly>
+            <input id="fileurl3" name="fileurl3" type="text" class="file-url-input" readonly>
+            <button class="delete-button">Remove</button>
+        </div>
+        <div class="file-input-container hide">
+            <input id="filename4" name="filename4" type="text" class="file-name-input" readonly>
+            <input id="fileurl4" name="fileurl4" type="text" class="file-url-input" readonly>
+            <button class="delete-button">Remove</button>
+        </div>
+        <div class="file-input-container hide">
+            <input id="filename5" name="filename5" type="text" class="file-name-input" readonly>
+            <input id="fileurl5" name="fileurl5" type="text" class="file-url-input" readonly>
+            <button class="delete-button">Remove</button>
+        </div>
         <button id="file-picker">Attach</button><br>
     </div>
 
@@ -51,45 +85,21 @@
         fromSources: ["local_file_system","url","googledrive"],
         maxFiles: 5,
         onUploadDone(files){
+            // loop through uploaded files
             for(let i = 0; i < files.filesUploaded.length; i++){
                 let file = files.filesUploaded[i];
+                const fileNameInputs = document.getElementsByClassName("file-name-input");
+                const fileUrlInputs = document.getElementsByClassName("file-url-input");
 
-                // create html input elements
-                const inputContainer = document.createElement("div");
-                const inputFileUrl = document.createElement("input");
-                const inputFileName = document.createElement("input");
-                const breakTag = document.createElement("br")
-                const deleteButton = document.createElement("button");
-
-                // set html input attributes
-                inputContainer.setAttribute("class", "file-input-container");
-                inputFileName.setAttribute("type", "text");
-                inputFileName.setAttribute("id", `filename${i + 1}`);
-                inputFileName.setAttribute("name", `filename${i + 1}`);
-                inputFileUrl.setAttribute("type", "text");
-                inputFileUrl.setAttribute("id", `fileurl${i + 1}`);
-                inputFileUrl.setAttribute("name", `fileurl${i + 1}`);
-                deleteButton.setAttribute("class", "delete-button");
-                deleteButton.innerText = "Delete";
-
-                // set data into html input elements
-                inputFileName.value = file.filename;
-                inputFileUrl.value = file.url;
-                inputFileName.setAttribute("readonly", "true");
-                inputFileUrl.setAttribute("readonly", "true");
-
-                // add html input elements to new-files <div>
-                const newFiles = document.getElementById("new-files");
-                inputContainer.appendChild(inputFileName);
-                inputContainer.appendChild(inputFileUrl);
-                inputContainer.appendChild(deleteButton);
-                inputContainer.appendChild(breakTag);
-                newFiles.appendChild(inputContainer);
-
-                // Deletes inputContainer and its children
-                $(".delete-button").click(function(){
-                    $(this).parent().remove();
-                });
+                // loop through class="file-name-input" and look for an empty space
+                for(let j = 0; j < fileNameInputs.length; j++) {
+                    if(fileNameInputs[j].value.length === 0 && fileUrlInputs[j].value.length === 0){
+                        fileNameInputs[j].value = file.filename;
+                        fileUrlInputs[j].value = file.url;
+                        fileNameInputs[j].parentElement.classList.toggle("hide");
+                        break;  // we have already found a spot for our new file so exit, and proceed to next file (next 'i')
+                    }
+                }
             }
         }
     };
@@ -99,6 +109,11 @@
     filePicker.addEventListener('click', function(e){
         e.preventDefault();
         picker.open();
+    });
+
+    $(".delete-button").click(function(){
+        $(this).siblings().val("");  // removes value from input text boxes
+        $(this).parent().toggleClass("hide"); // hides the input fields
     });
 </script>
 </body>
