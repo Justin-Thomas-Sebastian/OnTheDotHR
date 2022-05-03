@@ -1,21 +1,14 @@
 package com.codeup.onthedothr.controllers;
 
 import com.codeup.onthedothr.models.*;
-import com.codeup.onthedothr.repositories.CategoriesRepository;
-import com.codeup.onthedothr.repositories.DeliverablesRepository;
-import com.codeup.onthedothr.repositories.EmployeeRepository;
-import com.codeup.onthedothr.repositories.StatusRepository;
+import com.codeup.onthedothr.repositories.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Controller
 public class DeliverablesController {
@@ -23,17 +16,20 @@ public class DeliverablesController {
     private final DeliverablesRepository deliverablesDao;
     private final CategoriesRepository categoriesDao;
     private final StatusRepository statusDao;
+    private final DeliverableAttachmentRepository attachmentsDao;
 
     public DeliverablesController(
             DeliverablesRepository deliverablesDao,
             EmployeeRepository employeesDao,
             CategoriesRepository categoriesDao,
-            StatusRepository statusDao){
+            StatusRepository statusDao,
+            DeliverableAttachmentRepository attachmentsDao){
 
         this.deliverablesDao = deliverablesDao;
         this.employeesDao = employeesDao;
         this.categoriesDao = categoriesDao;
         this.statusDao = statusDao;
+        this.attachmentsDao = attachmentsDao;
     }
 
     @GetMapping("/details")
@@ -93,14 +89,6 @@ public class DeliverablesController {
             @RequestParam(name = "fileurl5") String fileurl5,
             @RequestParam(name = "deadline") String deadline) throws ParseException {
 
-        // testing files
-        System.out.println(filename1);
-        System.out.println(filename3);
-        System.out.println(filename2);
-        System.out.println(fileurl5);
-        System.out.println(fileurl1);
-        System.out.println(fileurl2);
-
         // Transform data from form into the format that the database requires
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -120,7 +108,24 @@ public class DeliverablesController {
         deliverable.setDeadline(deadlineDate);
         deliverable.setStatus(status);
         deliverablesDao.save(deliverable);
+
+        // If filename and fileurl exists, set to new DeliverableAttachment and bind to corresponding Deliverable
+        checkAndInsertAttachment(deliverable, filename1, fileurl1);
+        checkAndInsertAttachment(deliverable, filename2, fileurl2);
+        checkAndInsertAttachment(deliverable, filename3, fileurl3);
+        checkAndInsertAttachment(deliverable, filename4, fileurl4);
+        checkAndInsertAttachment(deliverable, filename5, fileurl5);
         return "redirect:/supervisor-dashboard";
+    }
+
+    // If file name and file url are not null, bind to deliverable then save to database
+    public void checkAndInsertAttachment(Deliverable deliverable, String filename, String fileurl){
+        if(filename.length() == 0 && fileurl.length() == 0){
+            System.out.println("Nothing to add.");
+        } else {
+            DeliverableAttachment attachment = new DeliverableAttachment(deliverable, filename, fileurl);
+            attachmentsDao.save(attachment);
+        }
     }
 
     // Utility method used to return category names. Used in an HTML select tag to display category names alongside categoryId

@@ -21,7 +21,7 @@ public class Deliverable {
     private Employee supervisor;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deliverable")
-    private List<DeliverableAttachments> attachments;
+    private List<DeliverableAttachment> attachments;
 
     @OneToOne
     private Category category;
@@ -50,7 +50,7 @@ public class Deliverable {
     // Constructors
     public Deliverable(){}
 
-    public Deliverable(Employee employee, Employee supervisor, List<DeliverableAttachments> attachments, Category category, Status status, String title, String description, Date dateCreated, Date lastActive, Date deadline) {
+    public Deliverable(Employee employee, Employee supervisor, List<DeliverableAttachment> attachments, Category category, Status status, String title, String description, Date dateCreated, Date lastActive, Date deadline) {
         this.employee = employee;
         this.supervisor = supervisor;
         this.attachments = attachments;
@@ -88,11 +88,11 @@ public class Deliverable {
         this.supervisor = supervisor;
     }
 
-    public List<DeliverableAttachments> getAttachments() {
+    public List<DeliverableAttachment> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<DeliverableAttachments> attachments) {
+    public void setAttachments(List<DeliverableAttachment> attachments) {
         this.attachments = attachments;
     }
 

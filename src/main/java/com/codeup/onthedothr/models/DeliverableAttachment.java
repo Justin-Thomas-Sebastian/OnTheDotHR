@@ -4,23 +4,27 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "deliverableAttachments")
-public class DeliverableAttachments {
+public class DeliverableAttachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String fileUrl;
+
+    @Column(nullable = false)
+    private String fileName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deliverable_id")
     private Deliverable deliverable;
 
-    public DeliverableAttachments(){}
+    public DeliverableAttachment(){}
 
-    public DeliverableAttachments(String fileUrl, Deliverable deliverable) {
-        this.fileUrl = fileUrl;
+    public DeliverableAttachment(Deliverable deliverable, String fileName, String fileUrl) {
         this.deliverable = deliverable;
+        this.fileName = fileName;
+        this.fileUrl = fileUrl;
     }
 
     public long getId() {
@@ -45,5 +49,13 @@ public class DeliverableAttachments {
 
     public void setDeliverable(Deliverable deliverable) {
         this.deliverable = deliverable;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }
