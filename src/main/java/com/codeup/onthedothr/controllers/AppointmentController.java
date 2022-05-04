@@ -18,4 +18,9 @@ public class AppointmentController {
         model.addAttribute("feedback", feedback);
         return "/users/request";
     }
+
+    @GetMapping("/requests")
+    public String getRequestsBucket(){
+        return "appointments/requests";
+    }
 }

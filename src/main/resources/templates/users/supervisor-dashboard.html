@@ -8,7 +8,12 @@
 
 <body>
     <header th:replace="partials/partials.html :: header"></header>
-    <h1>THIS IS SUPERVISOR DASHBOARD</h1>
+    <h1>THIS IS THE SUPERVISOR DASHBOARD</h1>
+
+    <!-- Go to supervisor's requests bucket -->
+    <form style="display:inline;" action="/requests" method="get">
+        <input type="submit" value="View appointment requests">
+    </form>
 
     <!-- List all assigned employees of logged in supervisor -->
     <div id="assigned-employees">
@@ -34,6 +39,8 @@
             </form>
         </div>
     </div>
+
+    <a href="/dashboard">Return to employee dashboard</a>
 
     <!-- All employees should be listed here with search functionality -->
     <div id="All Employees">

@@ -74,6 +74,7 @@
 
     <input type="submit" value="Create new Task ">
 </form>
+<a href="/supervisor-dashboard">Return to supervisor dashboard</a>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/js/keys.js"></script>
@@ -111,7 +112,8 @@
         picker.open();
     });
 
-    $(".delete-button").click(function(){
+    $(".delete-button").click(function(e){
+        e.preventDefault();
         $(this).siblings().val("");  // removes value from input text boxes
         $(this).parent().toggleClass("hide"); // hides the input fields
     });
