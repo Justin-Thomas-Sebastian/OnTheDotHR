@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.sql.Time;
 
 @Controller
 public class AppointmentController {
@@ -44,15 +45,18 @@ public class AppointmentController {
             @RequestParam(name = "appointment-date") String date,
             @RequestParam(name = "title") String title,
             @RequestParam(name = "description") String description,
+            @RequestParam(name = "appointment-time") String appointmentTimeStr,
             Model model) throws ParseException {
 
         Appointment appointment = new Appointment();
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Currently logged-in user
         AppointmentStatus defaultStatus = appointmentStatusDao.getById(1L); // Default status is 'pending"
 
-        // Change date to format that can be inserted to db
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Date appointmentDate = formatter.parse(date);
+        // Change date and time to format that can be inserted to db
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
+        Date appointmentDate = dateFormatter.parse(date);
+        Time appointmentTime = new Time(timeFormatter.parse(appointmentTimeStr).getTime());
 
         // Update appointment object
         appointment.setEmployee(user);
@@ -61,8 +65,9 @@ public class AppointmentController {
         appointment.setDescription(description);
         appointment.setDate(appointmentDate);
         appointment.setStatus(defaultStatus);
+        appointment.setSqlTime(appointmentTime);
 
-        // User Feedback. Only create appointment when employee actually has a supervisor
+        // User Feedback. Only insert appointment to db when employee actually has a supervisor
         String feedback = "";
         if(user.getSupervisor() == null){
             feedback = "You are currently not assigned to a supervisor. Request cancelled.";

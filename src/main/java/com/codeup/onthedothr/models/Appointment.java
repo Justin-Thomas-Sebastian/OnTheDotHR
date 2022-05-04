@@ -1,6 +1,7 @@
 package com.codeup.onthedothr.models;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -13,6 +14,9 @@ public class Appointment {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date date;
+
+    @Column(nullable = false)
+    private java.sql.Time sqlTime;
 
     @Column(nullable = false)
     private String title;
@@ -95,5 +99,13 @@ public class Appointment {
 
     public void setStatus(AppointmentStatus status) {
         this.status = status;
+    }
+
+    public Time getSqlTime() {
+        return sqlTime;
+    }
+
+    public void setSqlTime(Time sqlTime) {
+        this.sqlTime = sqlTime;
     }
 }
