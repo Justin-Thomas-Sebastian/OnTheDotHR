@@ -9,8 +9,25 @@
 
 <body sec:authorize="isAuthenticated()">
     <header th:replace="partials/partials.html :: header"></header>
-    <h1>This is appointment requests from supervisor perspective</h1>
-    <a href="/supervisor-dashboard">Return to supervisor dashboard</a>
+    <h1>Appointment Requests</h1>
+    <div th:each="appointment : ${appointmentRequestList}">
+        <span th:text="${appointment.employee.getFirstName()}">&nbsp;</span>
+        <span th:text="${appointment.employee.getLastName()}"></span>
+        <span th:text="${appointment.id}"></span>
+        <span th:text="${appointment.title}"></span>
+        <span th:text="${appointment.description}"></span>
+        <span th:text="${appointment.date}"></span>
+        <span th:text="${appointment.time}"></span>
 
+        <form method="post" th:action="@{/appointments/{id}/update-status(id=${appointment.id})}" style="display: inline">
+            <select name="statusSelect" id="statusSelect" required>
+                <option value="" selected disabled hidden th:text="${appointment.status.getStatusName()}"></option>
+                <option th:each="option : ${statusOptions}" th:value="${option}" th:text="${option}"></option>
+            </select>
+            <input type="submit" value="Update">
+        </form>
+    </div>
+
+    <a href="/supervisor-dashboard">Return to supervisor dashboard</a>
 </body>
 </html>

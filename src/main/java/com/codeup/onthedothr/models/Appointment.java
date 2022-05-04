@@ -16,7 +16,7 @@ public class Appointment {
     private Date date;
 
     @Column(nullable = false)
-    private java.sql.Time sqlTime;
+    private Time time;
 
     @Column(nullable = false)
     private String title;
@@ -37,12 +37,13 @@ public class Appointment {
 
     public Appointment(){}
 
-    public Appointment(Date date, String title, String description, Employee employee, Employee supervisor) {
+    public Appointment(Date date, String title, String description, Employee employee, Employee supervisor, Time time) {
         this.date = date;
         this.title = title;
         this.description = description;
         this.employee = employee;
         this.supervisor = supervisor;
+        this.time = time;
     }
 
     public long getId() {
@@ -101,11 +102,11 @@ public class Appointment {
         this.status = status;
     }
 
-    public Time getSqlTime() {
-        return sqlTime;
+    public Time getTime() {
+        return time;
     }
 
-    public void setSqlTime(Time sqlTime) {
-        this.sqlTime = sqlTime;
+    public void setTime(Time time) {
+        this.time = time;
     }
 }

@@ -37,6 +37,11 @@
             <form style="display:inline;" th:action="@{/deliverables/{id}/create(id=${employee.id})}" method="get">
                 <input type="submit" value="New Task">
             </form>
+
+            <!-- View/Update Appointment requests -->
+            <form style="display:inline;" th:action="@{/appointments/{id}/manage(id=${employee.id})}" method="get">
+                <input type="submit" value="Appointments">
+            </form>
         </div>
     </div>
 

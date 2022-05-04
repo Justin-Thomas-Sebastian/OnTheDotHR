@@ -10,11 +10,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.sql.Time;
 
@@ -65,7 +68,7 @@ public class AppointmentController {
         appointment.setDescription(description);
         appointment.setDate(appointmentDate);
         appointment.setStatus(defaultStatus);
-        appointment.setSqlTime(appointmentTime);
+        appointment.setTime(appointmentTime);
 
         // User Feedback. Only insert appointment to db when employee actually has a supervisor
         String feedback = "";
@@ -86,7 +89,53 @@ public class AppointmentController {
     }
 
     @GetMapping("/requests")
-    public String getRequestsBucket(){
+    public String getEmployeeAppointments(Model model){
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // not logged in as a supervisor, return to employee dashboard
+        if(!user.isSupervisor()){
+            model.addAttribute("user", user);
+            return "users/dashboard";
+        }
+
+        // logged in as a supervisor, proceed to my employee's appointment requests
+        // should only show 'pending' appointments (status_id of 1L)
+        List<String> statusOptions = getStatusAsList();
+        List<Appointment> appointmentRequestList = appointmentsDao.findAppointmentBySupervisorIdAndStatusId(user.getId(), 1L);
+        model.addAttribute("appointmentRequestList", appointmentRequestList);
+        model.addAttribute("statusOptions", statusOptions);
         return "appointments/requests";
+    }
+
+    @PostMapping("/appointments/{id}/update-status")
+    public String updateAppointmentStatus(@PathVariable long id, @RequestParam(name = "statusSelect") String status){
+        long newStatusId;
+        switch(status){
+            case "denied":
+                newStatusId = 2L;
+                break;
+            case "confirmed":
+                newStatusId = 3L;
+                break;
+            default:
+                newStatusId = 1L; // keep status as 'pending'
+                break;
+        }
+
+        // Update appointment status and save to db
+        AppointmentStatus newStatus = appointmentStatusDao.getById(newStatusId);
+        Appointment appointmentToUpdate = appointmentsDao.getById(id);
+        appointmentToUpdate.setStatus(newStatus);
+        appointmentsDao.save(appointmentToUpdate);
+        return "redirect:/requests";
+    }
+
+    // Utility method used to return status names. Used in an HTML select tag to display status names alongside statusId
+    public List<String> getStatusAsList(){
+        List<String> statusOptions = new ArrayList<>();
+        statusOptions.add("pending");
+        statusOptions.add("denied");
+        statusOptions.add("confirmed");
+        return statusOptions;
     }
 }
