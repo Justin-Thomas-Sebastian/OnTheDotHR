@@ -89,11 +89,27 @@ public class DeliverablesController {
             @RequestParam(name = "fileurl5") String fileurl5,
             @RequestParam(name = "deadline") String deadline) throws ParseException {
 
+        // Get category id from passed in categorySelect variable
+        long categoryId;
+        switch(categorySelect){
+            case "onboarding":
+                categoryId = 1L;
+                break;
+            case "notice":
+                categoryId = 2L;
+                break;
+            case "training":
+                categoryId = 3L;
+                break;
+            default: // generic category of "task"
+                categoryId = 4L;
+                break;
+        }
+
         // Transform data from form into the format that the database requires
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date deadlineDate = formatter.parse(deadline);
-        Long categoryId = Long.parseLong(categorySelect.replaceAll("[\\D]", "")); // removes all non digit from categorySelect
         Category category = categoriesDao.getById(categoryId);
         Status status = statusDao.getById(1L);  // Newly created deliverable will always start as 'unopened'
 
@@ -131,10 +147,10 @@ public class DeliverablesController {
     // Utility method used to return category names. Used in an HTML select tag to display category names alongside categoryId
     public List<String> getCategoriesAsList(){
         List<String> categoryOptions = new ArrayList<>();
-        categoryOptions.add("1 - Onboarding");
-        categoryOptions.add("2 - Notice ");
-        categoryOptions.add("3 - Training");
-        categoryOptions.add("4 - Task");
+        categoryOptions.add("onboarding");
+        categoryOptions.add("notice ");
+        categoryOptions.add("training");
+        categoryOptions.add("task");
         return categoryOptions;
     }
 }
