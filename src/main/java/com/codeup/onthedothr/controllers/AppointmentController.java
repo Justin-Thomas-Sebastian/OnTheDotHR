@@ -1,7 +1,9 @@
 package com.codeup.onthedothr.controllers;
 
 import com.codeup.onthedothr.models.Appointment;
+import com.codeup.onthedothr.models.AppointmentStatus;
 import com.codeup.onthedothr.models.Employee;
+import com.codeup.onthedothr.repositories.AppointmentStatusRepository;
 import com.codeup.onthedothr.repositories.AppointmentsRepository;
 import com.codeup.onthedothr.repositories.EmployeeRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,10 +22,16 @@ public class AppointmentController {
 
     private final AppointmentsRepository appointmentsDao;
     private final EmployeeRepository employeesDao;
+    private final AppointmentStatusRepository appointmentStatusDao;
 
-    public AppointmentController(AppointmentsRepository appointmentsDao, EmployeeRepository employeesDao){
+    public AppointmentController(
+            AppointmentsRepository appointmentsDao,
+            EmployeeRepository employeesDao,
+            AppointmentStatusRepository appointmentStatusDao){
+
         this.appointmentsDao = appointmentsDao;
         this.employeesDao = employeesDao;
+        this.appointmentStatusDao = appointmentStatusDao;
     }
 
     @GetMapping("/request-appointment")
@@ -41,6 +48,7 @@ public class AppointmentController {
 
         Appointment appointment = new Appointment();
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Currently logged-in user
+        AppointmentStatus defaultStatus = appointmentStatusDao.getById(1L); // Default status is 'pending"
 
         // Change date to format that can be inserted to db
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -52,6 +60,7 @@ public class AppointmentController {
         appointment.setTitle(title);
         appointment.setDescription(description);
         appointment.setDate(appointmentDate);
+        appointment.setStatus(defaultStatus);
 
         // User Feedback. Only create appointment when employee actually has a supervisor
         String feedback = "";

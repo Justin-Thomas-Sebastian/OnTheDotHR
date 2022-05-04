@@ -28,6 +28,9 @@ public class Appointment {
     @JoinColumn(name = "supervisor_id")
     private Employee supervisor;
 
+    @OneToOne
+    private AppointmentStatus status;
+
     public Appointment(){}
 
     public Appointment(Date date, String title, String description, Employee employee, Employee supervisor) {
@@ -84,5 +87,13 @@ public class Appointment {
 
     public void setSupervisor(Employee supervisor) {
         this.supervisor = supervisor;
+    }
+
+    public AppointmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AppointmentStatus status) {
+        this.status = status;
     }
 }
