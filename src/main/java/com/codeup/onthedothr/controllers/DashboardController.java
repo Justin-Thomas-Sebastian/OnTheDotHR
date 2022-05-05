@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,7 +31,7 @@ public class DashboardController {
         // Initialize Java objects from database
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(user.getId());
         List<Appointment> appointments = appointmentsDao.findAppointmentByUserIdAndStatusId(user.getId(), 3L); // Only 'confirmed' appointments (3L)
-        List<Appointment> supervisorAppointments = null;
+        List<Appointment> supervisorAppointments = new ArrayList<>();
 
         // If user is a supervisor, show their confirmed appointments with their assigned employees
         if(user.isSupervisor()){
