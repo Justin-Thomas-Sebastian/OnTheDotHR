@@ -12,12 +12,13 @@
 
 <div>
     Employee: <span th:text="${user.firstName}"></span>&nbsp;<span th:text="${user.lastName}"></span><br>
-    Username: <span th:text="${user.getUsername()}"></span><br>
-    Email: <span th:text="${user.getEmail()}"></span><br>
+    Username: <span th:text="${user.username}"></span><br>
+    Email: <span th:text="${user.email}"></span><br>
+    Contact No: <span th:text="${user.contactNo}"></span><br>
 </div>
 
 <!-- If a profile is accessed from 'view profile' button in supervisor dashboard,
- return link should go back to supervisor dashboard.
+ return link should go back to supervisor dashboard. Assign Emp
  For all other cases, return to dashboard -->
 <div th:switch="${isSupervisor} == true">
     <a th:case="${true}" href="/supervisor-dashboard">Return to supervisor dashboard</a>

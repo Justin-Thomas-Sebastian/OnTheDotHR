@@ -48,27 +48,10 @@
                     <span th:text="${supervisor.firstName}"></span>
                     <span th:text="${supervisor.lastName}"></span>
 
-                    <!-- Cancel button that triggers modal -->
-                    <button style="display:inline;" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">
-                        Cancel
-                    </button>
-
-                    <!-- Cancel Modal -->
-                    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    Cancel Appointment?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                                    <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post">
-                                        <input type="submit" value="Cancel" class="btn btn-danger">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Cancel appointment -->
+                    <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post">
+                        <input type="submit" value="Cancel" class="btn btn-danger">
+                    </form>
                 </div>
 
                 <!-- Supervisor's appointments with their employees -->
@@ -80,27 +63,10 @@
                     <span th:text="${appointment.employee.firstName}"></span>
                     <span th:text="${appointment.employee.lastName}"></span>
 
-                    <!-- Cancel button that triggers modal -->
-                    <button style="display:inline;" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModalSupervisor">
-                        Cancel
-                    </button>
-
-                    <!-- Cancel Modal -->
-                    <div class="modal fade" id="cancelModalSupervisor" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    Cancel Appointment?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                                    <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post">
-                                        <input type="submit" value="Cancel" class="btn btn-danger">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Cancel supervisor appointment -->
+                    <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post" style="display:inline;">
+                        <input type="submit" value="Cancel" class="btn btn-danger">
+                    </form>
                 </div>
             </div> <!-- End appointments switch default case -->
         </div>

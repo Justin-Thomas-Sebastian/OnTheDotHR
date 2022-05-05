@@ -61,4 +61,15 @@ public class EmployeeController {
         model.addAttribute("isSupervisor", true); // used to alter return link to "Return to supervisor dashboard"
         return "users/profile";
     }
+
+    @PostMapping("/assign/{id}")
+    public String assignEmployee(@PathVariable long id){
+        System.out.println(id);
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Employee employee = employeesDao.getById(id);
+        employee.setSupervisor(user);
+        employeesDao.save(employee);
+        System.out.println("assigned to supervisor");
+        return "redirect:/supervisor-dashboard";
+    }
 }
