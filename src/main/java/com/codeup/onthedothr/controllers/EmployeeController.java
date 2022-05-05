@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @Controller
 public class EmployeeController {
     private final EmployeeRepository employeesDao;
@@ -88,6 +90,38 @@ public class EmployeeController {
         employee.setSupervisor(user);
         employeesDao.save(employee);
         System.out.println("assigned to supervisor");
+        return "redirect:/supervisor-dashboard";
+    }
+
+    @GetMapping("/user/{id}/delete")
+    public String getDeleteConfirmationPage(@PathVariable long id, Model model){
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(!user.isSupervisor()){
+            return "redirect:/dashboard";
+        }
+
+        Employee employeeToDelete = employeesDao.getById(id);
+        model.addAttribute("employee", employeeToDelete);
+        return "/users/delete";
+    }
+
+    @PostMapping("/user/{id}/delete")
+    public String deleteEmployee(@PathVariable long id, Model model){
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(!user.isSupervisor()){  // ensures non supervisors cannot delete
+            return "redirect:/dashboard";
+        }
+
+        Employee employeeToDelete = employeesDao.getById(id);
+        if(employeeToDelete.isSupervisor()){  // un-assign all employees before delete
+            List<Employee> employees = employeesDao.findAssignedEmployees(employeeToDelete.getId());
+            for(Employee employee : employees){
+                employee.setSupervisor(null);
+            }
+            employeesDao.delete(employeeToDelete);
+            return "redirect:/logout"; // logout when self-deleting
+        }
+        employeesDao.delete(employeeToDelete);
         return "redirect:/supervisor-dashboard";
     }
 }

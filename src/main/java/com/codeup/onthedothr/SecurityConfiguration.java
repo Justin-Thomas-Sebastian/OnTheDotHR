@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()// enables GET request/redirect to logout
                 /* Login configuration */
                 .formLogin()
                 .loginPage("/login")
@@ -73,7 +73,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/appointments/{id}/update-status",
                         "/appointments/{id}/create",
                         "/appointments/{id}/manage",
-                        "/cancel-appointment/{id}"
+                        "/cancel-appointment/{id}",
+                        "/user/{id}/delete",
+                        "/users/delete"
                 )
                 .authenticated()
         ;

@@ -32,7 +32,10 @@
 <div th:switch="${isSupervisor} == true">
     <div th:case="${true}">
         <a href="/dashboard">Return to dashboard</a><br>
-        <a href="/supervisor-dashboard">Return to supervisor dashboard</a>
+        <a href="/supervisor-dashboard">Return to supervisor dashboard</a><br>
+        <form th:action="@{/user/{id}/delete(id=${user.id})}" method="get">
+            <input type="submit" value="Delete Employee">
+        </form>
     </div>
     <a th:case="*" href="/dashboard">Return to dashboard</a>
 </div>
