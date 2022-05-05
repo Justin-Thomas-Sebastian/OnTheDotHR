@@ -28,7 +28,14 @@ public class DashboardController {
 
         // Initialize Java objects from database
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(user.getId());
-        List<Appointment> appointments = appointmentsDao.findAppointmentByUserIdAndStatusId(user.getId(), 3L); // Only 'confirmed' appointments
+        List<Appointment> appointments = appointmentsDao.findAppointmentByUserIdAndStatusId(user.getId(), 3L); // Only 'confirmed' appointments (3L)
+        List<Appointment> supervisorAppointments = null;
+
+        // If user is a supervisor, show their confirmed appointments with their assigned employees
+        if(user.isSupervisor()){
+            supervisorAppointments = appointmentsDao.findAppointmentBySupervisorIdAndStatusId(user.getId(), 3L); // Only 'confirmed' appointments (3L)
+        }
+
         Long supervisorId = employeesDao.getSupervisorIdById(user.getId());
         Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with status_id
         Category category = new Category(); // Send empty Category object to view, so getCategory() can be called with category_id
@@ -46,6 +53,7 @@ public class DashboardController {
         model.addAttribute("status", status);
         model.addAttribute("category", category);
         model.addAttribute("appointments", appointments);
+        model.addAttribute("supervisorAppointments", supervisorAppointments);
         return "users/dashboard";
     }
 
