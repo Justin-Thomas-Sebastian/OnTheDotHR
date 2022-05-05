@@ -26,6 +26,7 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String showDashboard(Model model){
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Current logged-in user
+        user = employeesDao.getById(user.getId()); // used to capture changes if profile is edited while logged in
 
         // Initialize Java objects from database
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(user.getId());
