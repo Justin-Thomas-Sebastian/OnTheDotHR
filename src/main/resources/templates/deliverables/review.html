@@ -28,6 +28,10 @@
             <input type="submit" name="submit-name" value="approve">
         </form>
     </div>
+
+    <form th:action="@{/details/{id}(id=${deliverable.id})}" style="display: inline">
+        <input type="submit" value="Details">
+    </form>
 </div>
 <a href="/supervisor-dashboard">Return to supervisor dashboard</a>
 
