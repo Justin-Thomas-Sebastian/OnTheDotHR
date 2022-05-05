@@ -148,6 +148,46 @@ public class AppointmentController {
         return "/appointments/manage";
     }
 
+    @GetMapping("/appointments/{id}/create")
+    public String getCreateAppointmentForm(@PathVariable long id, Model model){
+        Employee supervisor = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Employee employee = employeesDao.getById(id);
+        model.addAttribute("supervisor", supervisor);
+        model.addAttribute("employee", employee);
+        return "/appointments/create";
+    }
+
+    @PostMapping("/appointments/{id}/create")
+    public String createNewAppointment(
+            @PathVariable long id,
+            @RequestParam(name = "appointment-date") String date,
+            @RequestParam(name = "title") String title,
+            @RequestParam(name = "description") String description,
+            @RequestParam(name = "appointment-time") String appointmentTimeStr,
+            Model model) throws ParseException{
+
+        Appointment appointment = new Appointment();
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Current logged-in user
+        AppointmentStatus confirmedStatus = appointmentStatusDao.getById(3L); // Set to 'confirmed'
+
+        // Change date and time to format that can be inserted to db
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm", Locale.ENGLISH);
+        Date appointmentDate = dateFormatter.parse(date);
+        Time appointmentTime = new Time(timeFormatter.parse(appointmentTimeStr).getTime());
+
+        // Update appointment object
+        appointment.setEmployee(employeesDao.getById(id));
+        appointment.setSupervisor(user);
+        appointment.setTitle(title);
+        appointment.setDescription(description);
+        appointment.setDate(appointmentDate);
+        appointment.setStatus(confirmedStatus);
+        appointment.setTime(appointmentTime);
+        appointmentsDao.save(appointment);
+        return "redirect:/supervisor-dashboard";
+    }
+
     // Utility method used to return status names. Used in an HTML select tag to display status names
     public List<String> getStatusAsList(){
         List<String> statusOptions = new ArrayList<>();

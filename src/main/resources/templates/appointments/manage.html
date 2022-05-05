@@ -8,6 +8,9 @@
 <body>
 <header th:replace="partials/partials.html :: header"></header>
 <h1><span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span>'s Appointments</h1>
+<form th:action="@{/appointments/{id}/create(id=${employee.id})}" method="get">
+    <input type="submit" value="New Appointment">
+</form>
 <div th:switch="${appointments.isEmpty()}">
     <span th:case="${true}">No appointments</span>
     <div th:case="*">
