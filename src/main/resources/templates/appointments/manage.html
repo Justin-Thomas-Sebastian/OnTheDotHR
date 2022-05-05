@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>View Employee Apppointments</title>
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+<header th:replace="partials/partials.html :: header"></header>
+<h1><span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span>'s Appointments</h1>
+<div th:switch="${appointments.isEmpty()}">
+    <span th:case="${true}">No appointments</span>
+    <div th:case="*">
+        <div th:each="appointment : ${appointments}">
+            <span th:text="${appointment.title}"></span>
+            <span th:text="${appointment.description}"></span>
+            <span th:text="${appointment.date}"></span>
+            <span th:text="${appointment.time}"></span>
+            <span th:text="${appointment.getSupervisor().firstName}"></span>
+            <span th:text="${appointment.getSupervisor().lastName}"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

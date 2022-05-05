@@ -49,7 +49,7 @@
                     <span th:text="${supervisor.lastName}"></span>
 
                     <!-- Cancel appointment -->
-                    <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post">
+                    <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post" style="display:inline;">
                         <input type="submit" value="Cancel" class="btn btn-danger">
                     </form>
                 </div>

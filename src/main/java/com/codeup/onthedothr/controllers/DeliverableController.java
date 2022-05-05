@@ -44,16 +44,33 @@ public class DeliverableController {
 
         // logged in as a supervisor, proceed to employee's current deliverables
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(id);
-        Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with status_id
-        Category category = new Category(); // Send empty Category object to view, so getCategory() can be called with category_id
         Employee employee = employeesDao.getById(id);
 
-        // Pass data objects to show.html
+        // Pass data objects to review.html
         model.addAttribute("deliverables", deliverables);
         model.addAttribute("employee", employee);
-        model.addAttribute("status", status);
-        model.addAttribute("category", category);
-        return "/deliverables/show";
+        return "/deliverables/review";
+    }
+
+    @PostMapping("/decision-deliverable/{id}")
+    public String approveDenyDeliverable(@PathVariable long id, @RequestParam(name = "submit-name") String submitName, Model model){
+        Deliverable deliverableToApprove = deliverablesDao.getById(id);
+        Employee employee = deliverableToApprove.getEmployee();
+        switch (submitName){
+            case "approve":
+                deliverableToApprove.setStatus(statusDao.getById(5L));
+                deliverablesDao.save(deliverableToApprove);
+                break;
+            case "deny":
+                deliverableToApprove.setStatus(statusDao.getById(2L));
+                deliverablesDao.save(deliverableToApprove);
+                break;
+            default:
+                System.out.println("Unexpected behavior");
+                break;
+        }
+        long employeeId = employee.getId();
+        return "redirect:/deliverables/" + employeeId;
     }
 
     @GetMapping("/details/{id}")

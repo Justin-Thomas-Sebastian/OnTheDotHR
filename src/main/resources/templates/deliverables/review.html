@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <link rel="stylesheet" href="/css/header.css">
     <meta charset="UTF-8">
-    <title>Review</title>
+    <title>Deliverables</title>
 </head>
-<body>
-<h1>Review</h1>
+
+<body sec:authorize="isAuthenticated()">
+<header th:replace="partials/partials.html :: header"></header>
+<h1>Review Deliverable</h1>
+<div>
+    Employee: <span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span><br>
+    Username: <span th:text="${employee.getUsername()}"></span><br>
+    Email: <span th:text="${employee.email}"></span><br>
+</div>
+<div th:each="deliverable : ${deliverables}">
+    <span th:text="${deliverable.id}"></span>
+    <span th:text="${deliverable.title}"></span>
+    <span th:text="${deliverable.description}"></span>
+    <span th:text="${deliverable.category.categoryName}"></span>
+    <span th:text="${deliverable.status.statusName}"></span>
+
+    <div style="display:inline;" th:if="${deliverable.status.statusName == 'submitted'}">
+        <form th:action="@{/decision-deliverable/{id}(id=${deliverable.id})}" method="post" style="display:inline;">
+            <input type="submit" name="submit-name" value="deny">
+            <input type="submit" name="submit-name" value="approve">
+        </form>
+    </div>
+</div>
+<a href="/supervisor-dashboard">Return to supervisor dashboard</a>
+
 </body>
 </html>

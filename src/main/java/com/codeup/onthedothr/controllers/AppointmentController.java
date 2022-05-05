@@ -139,6 +139,15 @@ public class AppointmentController {
         return "redirect:/dashboard";
     }
 
+    @GetMapping("/appointments/{id}/manage")
+    public String getEmployeeAppointmentDetails(@PathVariable long id, Model model){
+        Employee employee = employeesDao.getById(id);
+        List<Appointment> appointments = appointmentsDao.findAppointmentByUserIdAndStatusId(id, 3L); // only confirmed appointments
+        model.addAttribute("employee", employee);
+        model.addAttribute("appointments", appointments);
+        return "/appointments/manage";
+    }
+
     // Utility method used to return status names. Used in an HTML select tag to display status names
     public List<String> getStatusAsList(){
         List<String> statusOptions = new ArrayList<>();
