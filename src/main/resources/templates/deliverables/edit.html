@@ -1,14 +1,120 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/header.css">
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
     <title>Edit deliverable</title>
 </head>
-<body>
-<header th:replace="partials/partials.html :: header"></header>
-<h1>deliverable details and editing</h1>
-<a href="/dashboard">Return to dashboard</a>
 
+<body sec:authorize="isAuthenticated()">
+<header th:replace="partials/partials.html :: header"></header>
+    <h1>Task Submission</h1>
+
+    <form id="deliverable-info" th:action="@{/deliverables/{id}/edit(id=${deliverable.id})}" method="post">
+        <label for="title">Title</label><br>
+        <input id="title" name="title" type="text" th:value="${deliverable.title}" readonly><br>
+
+        <label for="category">Category</label><br>
+        <input id="category" name="category" type="text" th:value="${deliverable.category.getCategoryName()}" readonly><br>
+
+        <label for="status">Status</label><br>
+        <input id="status" name="status" type="text" th:value="${deliverable.status.getStatusName()}" readonly><br>
+
+        <label for="description">Description</label><br>
+        <textarea id="description" name="description" th:text="${deliverable.description}"></textarea><br>
+
+        <label for="last-active">Last Updated</label><br>
+        <input id="last-active" name="last-active" type="text" th:value="${deliverable.lastActive}" readonly><br>
+
+        <label for="deadline">Deadline</label><br>
+        <input id="deadline" name="deadline" type="text" th:value="${deliverable.deadline}" readonly><br>
+
+        <h3>Attachments</h3>
+        <div th:each="attachment : ${attachments}">
+            <a th:href="${attachment.fileUrl}" th:text="${attachment.fileName}" download></a>
+        </div>
+
+        <!-- Upload Files (Maximum of 5) -->
+        <div id="new-files">
+            <h3>Upload Files</h3>
+            <div class="file-input-container hide">
+                <input id="filename1" name="filename1" type="text" class="file-name-input" readonly>
+                <input id="fileurl1" name="fileurl1" type="text" class="file-url-input" hidden readonly>
+                <button class="delete-button">Remove</button>
+            </div>
+            <div class="file-input-container hide">
+                <input id="filename2" name="filename2" type="text" class="file-name-input" readonly>
+                <input id="fileurl2" name="fileurl2" type="text" class="file-url-input" hidden readonly>
+                <button class="delete-button">Remove</button>
+            </div>
+            <div class="file-input-container hide">
+                <input id="filename3" name="filename3" type="text" class="file-name-input" readonly>
+                <input id="fileurl3" name="fileurl3" type="text" class="file-url-input"  hidden readonly>
+                <button class="delete-button">Remove</button>
+            </div>
+            <div class="file-input-container hide">
+                <input id="filename4" name="filename4" type="text" class="file-name-input" readonly>
+                <input id="fileurl4" name="fileurl4" type="text" class="file-url-input"  hidden readonly>
+                <button class="delete-button">Remove</button>
+            </div>
+            <div class="file-input-container hide">
+                <input id="filename5" name="filename5" type="text" class="file-name-input" readonly>
+                <input id="fileurl5" name="fileurl5" type="text" class="file-url-input" hidden readonly>
+                <button class="delete-button">Remove</button>
+            </div>
+        </div>
+        <button id="file-picker">Attach</button><br>
+        <input type="submit" name="submit-name" value="save">
+        <input type="submit" name="submit-name" value="submit">
+    </form>
+    <a href="/dashboard">Return to dashboard</a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/js/keys.js"></script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script>
+    const client = filestack.init(FILESTACK_KEY);
+    const filePicker = document.getElementById("file-picker");
+    const options = {
+        fromSources: ["local_file_system","url","googledrive"],
+        maxFiles: 5,
+        onUploadDone(files){
+            // loop through uploaded files
+            for(let i = 0; i < files.filesUploaded.length; i++){
+                let file = files.filesUploaded[i];
+                const fileNameInputs = document.getElementsByClassName("file-name-input");
+                const fileUrlInputs = document.getElementsByClassName("file-url-input");
+
+                // loop through class="file-name-input" and look for an empty space
+                for(let j = 0; j < fileNameInputs.length; j++) {
+                    if(fileNameInputs[j].value.length === 0 && fileUrlInputs[j].value.length === 0){
+                        fileNameInputs[j].value = file.filename;
+                        fileUrlInputs[j].value = file.url;
+                        fileNameInputs[j].parentElement.classList.toggle("hide");
+                        break;  // we have already found a spot for our new file so exit, and proceed to next file (next 'i')
+                    }
+                }
+            }
+        }
+    };
+
+    const picker = client.picker(options);
+
+    filePicker.addEventListener('click', function(e){
+        e.preventDefault();
+        picker.open();
+    });
+
+    $(".delete-button").click(function(e){
+        e.preventDefault();
+        $(this).siblings().val("");  // removes value from input text boxes
+        $(this).parent().toggleClass("hide"); // hides the input fields
+    });
+</script>
 </body>
 </html>

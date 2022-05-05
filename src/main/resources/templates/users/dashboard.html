@@ -33,7 +33,7 @@
         <span th:case="*"></span>
     </div>
 
-    <!-- Approved and upcoming appointments -->
+    <!-- Display approved and upcoming appointments -->
     <div id="employee-appointments">
         <h1>Upcoming Appointments</h1>
         <div th:switch="${appointments.isEmpty()}">
@@ -92,7 +92,7 @@
             <span th:text="${deliverable.deadline}"></span>
             <span th:with="category = ${deliverable.getCategory()}" th:text="${category.getCategoryName()}"></span>
             <span th:with="status = ${deliverable.getStatus()}" th:text="${status.getStatusName()}"></span>
-            <form style="display: inline;" action="/details" method="get">
+            <form style="display: inline;" th:action="@{/details/{id}(id=${deliverable.id})}" method="get">
                 <input type="submit" value="Details">
             </form>
         </div>

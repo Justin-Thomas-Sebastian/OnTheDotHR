@@ -52,7 +52,7 @@ public class AppointmentController {
             Model model) throws ParseException {
 
         Appointment appointment = new Appointment();
-        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Currently logged-in user
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Current logged-in user
         AppointmentStatus defaultStatus = appointmentStatusDao.getById(1L); // Default status is 'pending"
 
         // Change date and time to format that can be inserted to db
@@ -139,7 +139,7 @@ public class AppointmentController {
         return "redirect:/dashboard";
     }
 
-    // Utility method used to return status names. Used in an HTML select tag to display status names alongside statusId
+    // Utility method used to return status names. Used in an HTML select tag to display status names
     public List<String> getStatusAsList(){
         List<String> statusOptions = new ArrayList<>();
         statusOptions.add("pending");

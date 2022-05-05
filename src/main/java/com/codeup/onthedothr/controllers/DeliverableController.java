@@ -32,8 +32,12 @@ public class DeliverableController {
         this.attachmentsDao = attachmentsDao;
     }
 
-    @GetMapping("/details")
-    public String getDeliverableDetails(Model model){
+    @GetMapping("/details/{id}")
+    public String getDeliverableDetails(@PathVariable long id, Model model){
+        Deliverable deliverable = deliverablesDao.getById(id);
+        List<DeliverableAttachment> attachments = attachmentsDao.findDeliverableAttachmentsByDeliverableId(deliverable.getId());
+        model.addAttribute("deliverable", deliverable);
+        model.addAttribute("attachments", attachments);
         return "/deliverables/edit";
     }
 
@@ -59,6 +63,22 @@ public class DeliverableController {
         model.addAttribute("status", status);
         model.addAttribute("category", category);
         return "/deliverables/show";
+    }
+
+    @PostMapping("/deliverables/{id}/edit")
+    public String editDeliverable(@PathVariable Long id, Model model, @RequestParam(name = "submit-name") String submitName){
+        switch (submitName){
+            case "save":
+                System.out.println("saved");
+                break;
+            case "submit":
+                System.out.println("submitted");
+                break;
+            default:
+                System.out.println("error encountered");
+                break;
+        }
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/deliverables/{id}/create")
@@ -144,7 +164,7 @@ public class DeliverableController {
         }
     }
 
-    // Utility method used to return category names. Used in an HTML select tag to display category names alongside categoryId
+    // Utility method used to return category names. Used in an HTML select tag to display category names
     public List<String> getCategoriesAsList(){
         List<String> categoryOptions = new ArrayList<>();
         categoryOptions.add("onboarding");
