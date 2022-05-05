@@ -49,6 +49,7 @@ public class AppointmentController {
             @RequestParam(name = "title") String title,
             @RequestParam(name = "description") String description,
             @RequestParam(name = "appointment-time") String appointmentTimeStr,
+            @RequestParam(name = "location") String location,
             Model model) throws ParseException {
 
         Appointment appointment = new Appointment();
@@ -69,6 +70,7 @@ public class AppointmentController {
         appointment.setDate(appointmentDate);
         appointment.setStatus(defaultStatus);
         appointment.setTime(appointmentTime);
+        appointment.setLocation(location);
 
         // User Feedback. Only insert appointment to db when employee actually has a supervisor
         String feedback = "";
@@ -164,6 +166,7 @@ public class AppointmentController {
             @RequestParam(name = "title") String title,
             @RequestParam(name = "description") String description,
             @RequestParam(name = "appointment-time") String appointmentTimeStr,
+            @RequestParam(name = "location") String location,
             Model model) throws ParseException{
 
         Appointment appointment = new Appointment();
@@ -184,6 +187,7 @@ public class AppointmentController {
         appointment.setDate(appointmentDate);
         appointment.setStatus(confirmedStatus);
         appointment.setTime(appointmentTime);
+        appointment.setLocation(location);
         appointmentsDao.save(appointment);
         return "redirect:/supervisor-dashboard";
     }

@@ -18,6 +18,7 @@
         <span th:text="${appointment.description}"></span>
         <span th:text="${appointment.date}"></span>
         <span th:text="${appointment.time}"></span>
+        <span th:text="${appointment.location}"></span>
 
         <form method="post" th:action="@{/appointments/{id}/update-status(id=${appointment.id})}" style="display: inline">
             <select name="statusSelect" id="statusSelect" required>

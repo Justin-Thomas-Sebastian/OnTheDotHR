@@ -24,6 +24,9 @@ public class Appointment {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(nullable = false)
+    private String location;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
@@ -37,13 +40,14 @@ public class Appointment {
 
     public Appointment(){}
 
-    public Appointment(Date date, String title, String description, Employee employee, Employee supervisor, Time time) {
+    public Appointment(Date date, String title, String description, Employee employee, Employee supervisor, Time time, String location) {
         this.date = date;
         this.title = title;
         this.description = description;
         this.employee = employee;
         this.supervisor = supervisor;
         this.time = time;
+        this.location = location;
     }
 
     public long getId() {
@@ -108,5 +112,13 @@ public class Appointment {
 
     public void setTime(Time time) {
         this.time = time;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
