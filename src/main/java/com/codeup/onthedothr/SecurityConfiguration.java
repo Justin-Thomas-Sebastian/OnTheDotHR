@@ -59,15 +59,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/profile",
                         "/profile/{id}",
                         "/details",
+                        "/decision-deliverable/{id}",
+                        "/details/{id}",
                         "/deliverables/{id}",
                         "/deliverables/show",
                         "/deliverables/create",
                         "/deliverables/{id}/create",
+                        "/deliverables/{id}/edit",
                         "/request-appointment",
                         "/deliverables/edit",
                         "/request-appointment",
                         "/requests",
-                        "/appointments/{id}/update-status"
+                        "/appointments/{id}/update-status",
+                        "/appointments/{id}/create",
+                        "/appointments/{id}/manage",
+                        "/cancel-appointment/{id}"
                 )
                 .authenticated()
         ;
