@@ -1,10 +1,8 @@
 package com.codeup.onthedothr.controllers;
 
-import com.codeup.onthedothr.models.Category;
-import com.codeup.onthedothr.models.Deliverable;
-import com.codeup.onthedothr.models.Employee;
-import com.codeup.onthedothr.models.Status;
-import com.codeup.onthedothr.repositories.DeliverablesRepository;
+import com.codeup.onthedothr.models.*;
+import com.codeup.onthedothr.repositories.AppointmentRepository;
+import com.codeup.onthedothr.repositories.DeliverableRepository;
 import com.codeup.onthedothr.repositories.EmployeeRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,19 +13,22 @@ import java.util.List;
 @Controller
 public class DashboardController {
     private final EmployeeRepository employeesDao;
-    private final DeliverablesRepository deliverablesDao;
+    private final DeliverableRepository deliverablesDao;
+    private final AppointmentRepository appointmentsDao;
 
-    public DashboardController(EmployeeRepository employeesDao, DeliverablesRepository deliverablesDao) {
+    public DashboardController(EmployeeRepository employeesDao, DeliverableRepository deliverablesDao, AppointmentRepository appointmentsDao) {
         this.employeesDao = employeesDao;
         this.deliverablesDao = deliverablesDao;
+        this.appointmentsDao = appointmentsDao;
     }
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model){
-        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Currently logged-in user
+        Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); // Current logged-in user
 
         // Initialize Java objects from database
         List<Deliverable> deliverables = deliverablesDao.findDeliverablesById(user.getId());
+        List<Appointment> appointments = appointmentsDao.findAppointmentByUserIdAndStatusId(user.getId(), 3L); // Only 'confirmed' appointments
         Long supervisorId = employeesDao.getSupervisorIdById(user.getId());
         Status status = new Status(); // Send empty Status object to view, so getStatus() can be called with status_id
         Category category = new Category(); // Send empty Category object to view, so getCategory() can be called with category_id
@@ -44,6 +45,7 @@ public class DashboardController {
         model.addAttribute("deliverables", deliverables);
         model.addAttribute("status", status);
         model.addAttribute("category", category);
+        model.addAttribute("appointments", appointments);
         return "users/dashboard";
     }
 

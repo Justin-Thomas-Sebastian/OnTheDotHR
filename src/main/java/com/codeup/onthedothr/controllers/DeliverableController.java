@@ -11,17 +11,17 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
-public class DeliverablesController {
+public class DeliverableController {
     private final EmployeeRepository employeesDao;
-    private final DeliverablesRepository deliverablesDao;
-    private final CategoriesRepository categoriesDao;
+    private final DeliverableRepository deliverablesDao;
+    private final CategoryRepository categoriesDao;
     private final StatusRepository statusDao;
     private final DeliverableAttachmentRepository attachmentsDao;
 
-    public DeliverablesController(
-            DeliverablesRepository deliverablesDao,
+    public DeliverableController(
+            DeliverableRepository deliverablesDao,
             EmployeeRepository employeesDao,
-            CategoriesRepository categoriesDao,
+            CategoryRepository categoriesDao,
             StatusRepository statusDao,
             DeliverableAttachmentRepository attachmentsDao){
 

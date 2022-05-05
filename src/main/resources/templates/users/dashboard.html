@@ -5,6 +5,10 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
 </head>
 <body sec:authorize="isAuthenticated()">
     <header th:replace="partials/partials.html :: header"></header>
@@ -27,6 +31,45 @@
             <input type="submit" value="Supervisor Dashboard">
         </form>
         <span th:case="*"></span>
+    </div>
+
+    <!-- Approved and upcoming appointments -->
+    <div id="employee-appointments">
+        <h1>Upcoming Appointments</h1>
+        <div th:switch="${appointments.isEmpty()}">
+            <span th:case="${true}">No scheduled appointments</span>
+            <span th:case="*"></span>
+            <div th:each="appointment : ${appointments}">
+                <span th:text="${appointment.title}"></span>
+                <span th:text="${appointment.description}"></span>
+                <span th:text="${appointment.date}"></span>
+                <span th:text="${appointment.time}"></span>
+                <span th:text="${supervisor.getFirstName()}"></span>
+                <span th:text="${supervisor.getLastName()}"></span>
+
+                <!-- Cancel button that triggers modal -->
+                <button style="display:inline;" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                    Cancel
+                </button>
+
+                <!-- Cancel Modal -->
+                <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                Cancel Appointment?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                                <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post">
+                                    <input type="submit" value="Cancel" class="btn btn-danger">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Button to request an appointment -->
@@ -54,5 +97,10 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous">
+    </script>
 </body>
 </html>

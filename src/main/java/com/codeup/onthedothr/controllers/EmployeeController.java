@@ -1,7 +1,7 @@
 package com.codeup.onthedothr.controllers;
 
 import com.codeup.onthedothr.models.Employee;
-import com.codeup.onthedothr.repositories.DeliverablesRepository;
+import com.codeup.onthedothr.repositories.DeliverableRepository;
 import com.codeup.onthedothr.repositories.EmployeeRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,9 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class EmployeeController {
     private final EmployeeRepository employeesDao;
     private final PasswordEncoder passwordEncoder;
-    private final DeliverablesRepository deliverablesDao;
+    private final DeliverableRepository deliverablesDao;
 
-    public EmployeeController(EmployeeRepository employeesDao, PasswordEncoder passwordEncoder, DeliverablesRepository deliverablesDao) {
+    public EmployeeController(EmployeeRepository employeesDao, PasswordEncoder passwordEncoder, DeliverableRepository deliverablesDao) {
         this.employeesDao = employeesDao;
         this.passwordEncoder = passwordEncoder;
         this.deliverablesDao = deliverablesDao;

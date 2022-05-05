@@ -4,7 +4,7 @@ import com.codeup.onthedothr.models.Appointment;
 import com.codeup.onthedothr.models.AppointmentStatus;
 import com.codeup.onthedothr.models.Employee;
 import com.codeup.onthedothr.repositories.AppointmentStatusRepository;
-import com.codeup.onthedothr.repositories.AppointmentsRepository;
+import com.codeup.onthedothr.repositories.AppointmentRepository;
 import com.codeup.onthedothr.repositories.EmployeeRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,12 +24,12 @@ import java.sql.Time;
 @Controller
 public class AppointmentController {
 
-    private final AppointmentsRepository appointmentsDao;
+    private final AppointmentRepository appointmentsDao;
     private final EmployeeRepository employeesDao;
     private final AppointmentStatusRepository appointmentStatusDao;
 
     public AppointmentController(
-            AppointmentsRepository appointmentsDao,
+            AppointmentRepository appointmentsDao,
             EmployeeRepository employeesDao,
             AppointmentStatusRepository appointmentStatusDao){
 
@@ -128,6 +128,15 @@ public class AppointmentController {
         appointmentToUpdate.setStatus(newStatus);
         appointmentsDao.save(appointmentToUpdate);
         return "redirect:/requests";
+    }
+
+    @PostMapping("/cancel-appointment/{id}")
+    public String cancelAppointment(@PathVariable long id){
+        Appointment appointmentToCancel = appointmentsDao.getById(id);
+        AppointmentStatus newStatus = appointmentStatusDao.getById(4L); // 4L is 'cancelled' status
+        appointmentToCancel.setStatus(newStatus);
+        appointmentsDao.save(appointmentToCancel);
+        return "redirect:/dashboard";
     }
 
     // Utility method used to return status names. Used in an HTML select tag to display status names alongside statusId
