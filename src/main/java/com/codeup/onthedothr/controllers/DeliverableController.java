@@ -32,15 +32,6 @@ public class DeliverableController {
         this.attachmentsDao = attachmentsDao;
     }
 
-    @GetMapping("/details/{id}")
-    public String getDeliverableDetails(@PathVariable long id, Model model){
-        Deliverable deliverable = deliverablesDao.getById(id);
-        List<DeliverableAttachment> attachments = attachmentsDao.findDeliverableAttachmentsByDeliverableId(deliverable.getId());
-        model.addAttribute("deliverable", deliverable);
-        model.addAttribute("attachments", attachments);
-        return "/deliverables/edit";
-    }
-
     @GetMapping("/deliverables/{id}")
     public String getDeliverablesById(@PathVariable Long id, Model model){
         Employee user = (Employee) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -65,19 +56,57 @@ public class DeliverableController {
         return "/deliverables/show";
     }
 
+    @GetMapping("/details/{id}")
+    public String getDeliverableDetails(@PathVariable long id, Model model){
+        Deliverable deliverable = deliverablesDao.getById(id);
+        List<DeliverableAttachment> attachments = attachmentsDao.findDeliverableAttachmentsByDeliverableId(deliverable.getId());
+        model.addAttribute("deliverable", deliverable);
+        model.addAttribute("attachments", attachments);
+        return "/deliverables/edit";
+    }
+
     @PostMapping("/deliverables/{id}/edit")
-    public String editDeliverable(@PathVariable Long id, Model model, @RequestParam(name = "submit-name") String submitName){
+    public String editDeliverable(
+            @PathVariable long id, Model model,
+            @RequestParam(name = "submit-name") String submitName,
+            @RequestParam(name = "description") String description,
+            @RequestParam(name = "filename1") String filename1,
+            @RequestParam(name = "filename2") String filename2,
+            @RequestParam(name = "filename3") String filename3,
+            @RequestParam(name = "filename4") String filename4,
+            @RequestParam(name = "filename5") String filename5,
+            @RequestParam(name = "fileurl1") String fileurl1,
+            @RequestParam(name = "fileurl2") String fileurl2,
+            @RequestParam(name = "fileurl3") String fileurl3,
+            @RequestParam(name = "fileurl4") String fileurl4,
+            @RequestParam(name = "fileurl5") String fileurl5 ){
+
+        Deliverable deliverableToUpdate = deliverablesDao.getById(id);
+        deliverableToUpdate.setDescription(description);
+        deliverableToUpdate.setLastActive(new Date()); // set current date
+        deliverablesDao.save(deliverableToUpdate);
+
         switch (submitName){
             case "save":
+                deliverableToUpdate.setStatus(statusDao.getById(2L)); // set status to 'in progress'
+                deliverablesDao.save(deliverableToUpdate);
                 System.out.println("saved");
                 break;
             case "submit":
+                deliverableToUpdate.setStatus(statusDao.getById(3L)); // set status to 'submitted'
+                deliverablesDao.save(deliverableToUpdate);
                 System.out.println("submitted");
                 break;
             default:
                 System.out.println("error encountered");
                 break;
         }
+
+        checkAndInsertAttachment(deliverableToUpdate, filename1, fileurl1);
+        checkAndInsertAttachment(deliverableToUpdate, filename2, fileurl2);
+        checkAndInsertAttachment(deliverableToUpdate, filename3, fileurl3);
+        checkAndInsertAttachment(deliverableToUpdate, filename4, fileurl4);
+        checkAndInsertAttachment(deliverableToUpdate, filename5, fileurl5);
         return "redirect:/dashboard";
     }
 

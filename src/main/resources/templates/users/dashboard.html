@@ -33,12 +33,13 @@
         <span th:case="*"></span>
     </div>
 
-    <!-- Display employee's approved and upcoming appointments -->
+    <!-- Display appointments section -->
     <div id="employee-appointments">
         <h1>Upcoming Appointments</h1>
         <div th:switch="${appointments.isEmpty() && supervisorAppointments.isEmpty()}">
             <div th:case="${true}">No scheduled appointments</div>
             <div th:case="*">
+                <!-- Display employee's approved and upcoming appointments with their supervisor -->
                 <div th:each="appointment : ${appointments}">
                     <span th:text="${appointment.title}"></span>
                     <span th:text="${appointment.description}"></span>
@@ -101,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- End display appointments section -->
+            </div> <!-- End appointments switch default case -->
         </div>
     </div>
 
