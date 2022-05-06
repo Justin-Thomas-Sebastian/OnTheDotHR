@@ -2,6 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="/css/header.css">
     <title>Partials</title>
 </head>
@@ -9,18 +13,29 @@
 
 <!-- HEADER FRAGMENT -->
 <header th:fragment="header">
-    <a href="#">Burger</a>
-    <h1><a href="/dashboard">LOGO</a></h1>
-    <div sec:authorize="!isAuthenticated()">
+    <!-- Side panel burger -->
+    <div id="header-side-panel" class="side-panel">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <a href="/">Home</a>
+        <a href="#">About</a>
         <a href="/login">Login</a>
+        <a href="/sign-up">Sign-Up</a>
+    </div>
+    <button class="open-btn" onclick="openNav()">&#9776;</button>
+
+    <h2><a href="/">OnTheDot<span id="logo-accent">HR</span></a></h2>
+    <div sec:authorize="!isAuthenticated()">
+        <div class="login-button-container">
+            <a id="login-button" href="/login">Login</a>
+        </div>
     </div>
     <div sec:authorize="isAuthenticated()">
-        <div>
+        <div id="profile-logout-container">
             <form th:action="@{/profile}" th:method="get">
-                <button class="btn-link btn" style="margin-top: 8px">Profile</button>
+                <button class="nav-button">Profile</button>
             </form>
             <form th:action="@{/logout}" th:method="post">
-                <button class="btn-link btn" style="margin-top: 8px">Logout</button>
+                <button class="nav-button">Logout</button>
             </form>
         </div>
     </div>
@@ -37,5 +52,10 @@
 
 <!-- FOOTER FRAGMENT -->
 <!--<footer th:fragment="footer">FOOTER</footer>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script src="/js/sidepanel.js"></script>
 </body>
 </html>

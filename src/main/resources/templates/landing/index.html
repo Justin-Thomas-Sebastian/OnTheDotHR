@@ -2,16 +2,104 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/header.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="/css/desktop-index.css">
+    <link rel="stylesheet" href="/css/header.css">
     <title>Welcome to OnTheDotHR</title>
 </head>
+
 <body>
 <header th:replace="partials/partials.html :: header"></header>
 
 <!-- Hero image -->
-<section id="hero-container">
-    <img id=hero-image src="https://via.placeholder.com/1440x550.png?text=SLOGAN HERE" alt="Placeholder image">
+<section id="my-hero-container" class="mb-5">
+    <img id="my-hero-image" src="/images/hero.jpg" alt="Office Workers" class="img-fluid">
+    <h1 id="my-hero-slogan" class="display-1">HR solutions at your fingertips</h1>
+    <a id="hero-sign-up" href="/sign-up">Get it free</a>
 </section>
+
+<!-- Info/site demo section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col col-md-6 col-sm-10">
+                <p class="pt-5 h5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
+                    adipisci aspernatur consectetur deleniti doloremque eveniet exercitationem
+                    facilis fugiat hic ipsam maiores quibusdam quo tempore temporibus ut? Beatae ipsa omnis quibusdam.
+                </p>
+            </div>
+            <div class="col col-md-6 col-sm-10">
+                <img src="https://via.placeholder.com/800x500" alt="placeholder" class="img-fluid">
+            </div>
+        </div>
+    </div>
+    <div class="container-lg p-5">
+        <div class="row">
+            <div class="col">
+                <img src="https://via.placeholder.com/800x500" alt="placeholder" class="img-fluid">
+            </div>
+            <div class="col">
+                <p class="pt-5 h5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus,
+                    adipisci aspernatur consectetur deleniti doloremque eveniet exercitationem
+                    facilis fugiat hic ipsam maiores quibusdam quo tempore temporibus ut? Beatae ipsa omnis quibusdam.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonial Section -->
+<section id="testimonial-section" class="container-fluid">
+    <div class="row">
+        <div class="col col-md-6 col-sm-12 d-flex flex-column align-items-center" id="testimonial-sub-section">
+            <h1 class="mb-4">Company Name</h1>
+            <h3>Bert Reynalds</h3>
+            <h3 class="pb-4">CEO and Founder of Company Name</h3>
+            <blockquote class="h5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Dolores eaque eligendi fuga inventore iste laudantium maxime
+                nesciunt officiis sint voluptatum? Ab, aperiam beatae consequuntur
+                corporis culpa, dignissimos dolor doloremque error eum inventore ipsam
+                laboriosam laudantium maiores minus natus nulla odit optio praesentium quam
+                quia quisquam rem repellendus sunt tempore vero.
+            </blockquote>
+        </div>
+
+        <div class="col col-md-6 col-sm-12 m-auto">
+            <img src="https://via.placeholder.com/600x600" alt="placeholder" class="img-fluid m-auto">
+        </div>
+    </div>
+</section>
+
+<!-- Sign up Banner -->
+<section id="sign-up-banner-section" class="container-fluid d-flex justify-content-center align-items-center flex-column">
+    <h1 class="text-light text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, doloribus.</h1>
+    <a id="banner-sign-up-btn" href="/sign-up" class="btn btn-warning mt-3 px-4 py-2">SIGN UP</a>
+</section>
+
+<!-- Footer -->
+<footer id="main-footer" class="container-fluid py-5">
+    <div class="row">
+        <div class="col col-lg-6 col-sm-12 d-flex flex-column justify-content-center">
+            <p class="px-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, alias blanditiis culpa dignissimos doloribus excepturi exercitationem fuga iste itaque molestiae mollitia nesciunt nulla numquam, obcaecati provident quisquam recusandae velit vitae.</p>
+            <ul id="footer-site-map" class="d-flex justify-content-between px-5 w-50">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/sign-up">Sign-Up</a></li>
+            </ul>
+        </div>
+        <div class="col col-lg-6 col-sm-12 d-flex justify-content-center align-items-center">
+            <img src="https://via.placeholder.com/300" alt="placeholder" class="img-fluid rounded-circle">
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script src="/js/sidepanel.js"></script>
 </body>
 </html>
