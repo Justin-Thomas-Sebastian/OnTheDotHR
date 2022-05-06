@@ -1,0 +1,28 @@
+body {
+    background-color: #eaeaea;
+}
+
+#sign-up-form {
+    width: 500px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+#sign-up-form label {
+    color: #3f3f3f;
+}
+
+#sign-up-form h4 {
+    color: #3f3f3f;
+}
+
+h1 a {
+    color: #383838;
+    text-decoration: none;
+}
+
+h1 a:hover {
+    color: #363636;
+    cursor: pointer;
+}
