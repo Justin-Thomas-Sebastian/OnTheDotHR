@@ -1,0 +1,53 @@
+body {
+    overflow-y: hidden;
+}
+
+/* 160 px is the size of the header */
+#login-row {
+    height: calc(100vh - 160px);
+}
+
+#login-form {
+    background-color: #d8d4d5;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+}
+
+#login-button-form {
+    background-color: #384d48;
+}
+
+#login-button-form:hover {
+    background-color: #627572;
+}
+
+/* SLIDESHOW */
+.mySlides {
+    display: none;
+}
+
+img {
+    vertical-align: middle;
+    object-fit: cover;
+    height:calc(100vh - 160px);
+    width: 100%;
+    max-height: 100%;
+}
+
+/* Slideshow container */
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 4.5s;
+}
+
+@keyframes fade {
+    from {opacity: .7}
+    to {opacity: 1}
+}

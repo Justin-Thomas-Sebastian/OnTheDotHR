@@ -6,6 +6,10 @@
     text-align: center;
 }
 
+#my-hero-container a{
+    text-decoration: none;
+}
+
 #my-hero-image {
     opacity: 0.7;
     height: 100%;

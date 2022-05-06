@@ -25,12 +25,12 @@ header {
     color: #ffc107;
 }
 
-a {
+header a {
     color: #E2E2E2;
     text-decoration: none;
 }
 
-a:hover {
+header a:hover {
     color: #ffffff;
 }
 
