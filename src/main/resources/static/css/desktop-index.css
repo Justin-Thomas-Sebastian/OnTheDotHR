@@ -45,11 +45,21 @@
     background-color: #e7ca73;
 }
 
+/* Demo/info section */
+.demo-img {
+    max-width: 600px;
+    border: 1px solid black;
+}
+
 /* TESTIMONIAL SECTION */
 #testimonial-section {
     background: #E2E2E2;
     padding: 100px 0;
     color: #282828;
+}
+
+#testimonial-img {
+    max-width: 600px;
 }
 
 /* Testimonial block quote */
@@ -89,6 +99,6 @@ blockquote:after {
 
 /* SIGN UP BANNER/SLOGAN SECTION */
 #sign-up-banner-section {
-    background-color: #383838;
-    padding: 200px 0;
+    background-color: #384d48;
+    padding: 100px 0;
 }

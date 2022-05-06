@@ -1,6 +1,6 @@
 /* FOOTER */
 #main-footer {
-    background-color: #384D48;;
+    background-color: #212529;;
 }
 
 #main-footer p {
@@ -22,4 +22,8 @@
 #footer-site-map a:hover {
     color: #e7ca73;
     text-decoration: underline;
+}
+
+#footer-logo{
+    max-width: 300px;
 }
