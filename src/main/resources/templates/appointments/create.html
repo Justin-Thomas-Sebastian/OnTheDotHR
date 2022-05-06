@@ -1,29 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        #appointment-create {
+            border: 1px solid lightgray;
+            border-radius: 10px;
+            width: 400px;
+        }
+    </style>
     <title>Create Appointment</title>
 </head>
 
 <body>
 <header th:replace="partials/partials.html :: header"></header>
+<div class="container-fluid my-2 p-5">
+    <a href="/supervisor-dashboard">Return to supervisor dashboard</a><br>
+</div>
 
-<form id="appointment-create" th:action="@{/appointments/{id}/create(id=${employee.id})}" th:method="post">
-    <label for="title">Reason for Appointment</label><br>
-    <input id="title" name="title" type="text" required><br>
-    <label for="description">Description: </label><br>
-    <input id="description" name="description" type="text" required><br>
-    <label for="appointment-date">Appointment Date:</label><br>
-    <input id="appointment-date" name="appointment-date" type="date" required><br>
-    <label for="appointment-time">Appointment Time:</label><br>
-    <input id="appointment-time" name="appointment-time" type="time" required><br>
-    <label for="location">Location:</label><br>
-    <input id="location" name="location" type="text" required><br>
-    <input type="submit" value="Submit Appointment Request">
-</form>
+<div class="container-fluid my-2 d-flex justify-content-center align-items-center">
+    <form id="appointment-create" th:action="@{/appointments/{id}/create(id=${employee.id})}" th:method="post" class="p-3 my-5">
+        <label for="title" class="form-label">Reason for Appointment</label>
+        <input id="title" name="title" type="text" required class="form-control">
 
-<a href="/supervisor-dashboard">Return to supervisor dashboard</a><br>
+        <label for="description" class="form-label">Description: </label>
+        <input id="description" name="description" type="text" required class="form-control">
 
+        <label for="appointment-date" class="form-label">Appointment Date:</label>
+        <input id="appointment-date" name="appointment-date" type="date" required class="form-control">
+
+        <label for="appointment-time" class="form-label">Appointment Time:</label>
+        <input id="appointment-time" name="appointment-time" type="time" required class="form-control">
+
+        <label for="location"  class="form-label">Location:</label>
+        <input id="location" name="location" type="text" required class="form-control">
+        <input type="submit" value="Create Appointment" class="btn btn-primary w-100 mt-4">
+    </form>
+</div>
+
+<footer th:replace="partials/partials.html :: footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script src="/js/sidepanel.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>

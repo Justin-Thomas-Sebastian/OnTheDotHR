@@ -18,7 +18,7 @@
 </div>
 
 <div class="container-fluid">
-    <h1><span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span>'s Appointments</h1>
+    <h1><span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span>'s appointments</h1>
     <form th:action="@{/appointments/{id}/create(id=${employee.id})}" method="get">
         <input type="submit" value="New Appointment" class="btn btn-warning">
     </form>

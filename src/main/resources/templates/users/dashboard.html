@@ -23,16 +23,16 @@
     <div class="mb-3 mx-5" th:switch="${supervisor == null}">
         <span th:case="${true}"></span>
         <span th:case="*">
-        <span>Supervisor: </span>
-        <span th:text="${supervisor.getFirstName()}"></span>&nbsp;
-        <span th:text="${supervisor.getLastName()}"></span><br>
-    </span>
+            <span>Supervisor: </span>
+            <span th:text="${supervisor.getFirstName()}"></span>&nbsp;
+            <span th:text="${supervisor.getLastName()}"></span><br>
+        </span>
     </div>
 
     <!-- Only show supervisor dashboard button to supervisors -->
     <div th:switch="${user.isSupervisor()}">
         <form th:case="${true}" method="get" action="/supervisor-dashboard">
-            <input type="submit" value="Supervisor Dashboard" class="btn btn-custom-green mx-5">
+            <input type="submit" value="Supervisor Dashboard" class="btn btn-primary mx-5">
         </form>
         <span th:case="*"></span>
     </div>
