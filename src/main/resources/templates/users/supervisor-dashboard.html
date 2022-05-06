@@ -11,67 +11,81 @@
 </head>
 
 <body>
-    <header th:replace="partials/partials.html :: header"></header>
-    <h1>THIS IS THE SUPERVISOR DASHBOARD</h1>
+<header th:replace="partials/partials.html :: header"></header>
+<h1>THIS IS THE SUPERVISOR DASHBOARD</h1>
 
-    <!-- Go to supervisor's requests bucket -->
-    <form style="display:inline;" action="/requests" method="get">
-        <input type="submit" value="View appointment requests">
+<!-- Go to supervisor's requests bucket -->
+<form action="/requests" method="get" style="display:inline;">
+    <input type="submit" value="View appointment requests">
+</form>
+
+
+<!-- List all assigned employees of logged in supervisor -->
+<div id="assigned-employees">
+    <h1>My assigned employees</h1>
+    <div th:each="employee: ${employees}">
+        <span th:text="${employee.firstName}"></span>
+        <span th:text="${employee.lastName}"></span>
+        <span th:text="${employee.email}"></span>
+
+        <!-- View employee's profile -->
+        <form style="display:inline;" th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
+            <input type="submit" value="View Profile">
+        </form>
+
+        <!-- View employees current deliverables -->
+        <form style="display:inline;" th:action="@{/deliverables/{id}(id=${employee.id})}" th:method="get">
+            <input type="submit" value="Current Deliverables">
+        </form>
+
+        <!-- Create a new deliverable and assign to employee -->
+        <form style="display:inline;" th:action="@{/deliverables/{id}/create(id=${employee.id})}" method="get">
+            <input type="submit" value="New Task">
+        </form>
+
+        <!-- View/Create Appointments -->
+        <form style="display:inline;" th:action="@{/appointments/{id}/manage(id=${employee.id})}" method="get">
+            <input type="submit" value="Appointments">
+        </form>
+    </div>
+</div>
+
+<a href="/dashboard">Return to employee dashboard</a>
+
+
+
+<!-- All employees should be listed here with search functionality -->
+<div id="All Employees">
+    <h1>All Employees</h1>
+    <!-- Employee Search Bar -->
+    <form action="/employees/search" method="get">
+        <input type="text" id="search-input" name="search-input">
+        <select name="search-category" id="search-category">
+            <option th:each="category : ${searchCategories}" th:value="${category}" th:text="${category}"></option>
+        </select>
+        <input type="submit" value="Search">
     </form>
+    <div th:each="employee : ${allEmployees}">
+        <span th:text="${employee.firstName}"></span>
+        <span th:text="${employee.lastName}"></span>
+        <span th:text="${employee.email}"></span>
+        <span th:text="${employee.username}"></span>
+        <!-- View employee's profile -->
+        <form style="display:inline;" th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
+            <input type="submit" value="View Profile">
+        </form>
 
-    <!-- List all assigned employees of logged in supervisor -->
-    <div id="assigned-employees">
-        <h1>My assigned employees</h1>
-        <div th:each="employee: ${employees}">
-            <span th:text="${employee.firstName}"></span>
-            <span th:text="${employee.lastName}"></span>
-            <span th:text="${employee.email}"></span>
-
-            <!-- View employee's profile -->
-            <form style="display:inline;" th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
-                <input type="submit" value="View Profile">
-            </form>
-
-            <!-- View employees current deliverables -->
-            <form style="display:inline;" th:action="@{/deliverables/{id}(id=${employee.id})}" th:method="get">
-                <input type="submit" value="Current Deliverables">
-            </form>
-
-            <!-- Create a new deliverable and assign to employee -->
-            <form style="display:inline;" th:action="@{/deliverables/{id}/create(id=${employee.id})}" method="get">
-                <input type="submit" value="New Task">
-            </form>
-
-            <!-- View/Create Appointments -->
-            <form style="display:inline;" th:action="@{/appointments/{id}/manage(id=${employee.id})}" method="get">
-                <input type="submit" value="Appointments">
-            </form>
-        </div>
+        <form style="display:inline;" th:action="@{/assign/{id}(id=${employee.id})}" th:method="post">
+            <input type="submit" value="Assign to your Team">
+        </form>
     </div>
-
-    <a href="/dashboard">Return to employee dashboard</a>
-
-    <!-- All employees should be listed here with search functionality -->
-    <div id="All Employees">
-        <h1>All Employees</h1>
-        <div th:each="employee : ${allEmployees}">
-            <span th:text="${employee.firstName}"></span>
-            <span th:text="${employee.lastName}"></span>
-            <span th:text="${employee.email}"></span>
-            <!-- View employee's profile -->
-            <form style="display:inline;" th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
-                <input type="submit" value="View Profile">
-            </form>
-
-            <form style="display:inline;" th:action="@{/assign/{id}(id=${employee.id})}" th:method="post">
-                <input type="submit" value="Assign to your Team">
-            </form>
-        </div>
-    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous">
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </body>
 </html>
