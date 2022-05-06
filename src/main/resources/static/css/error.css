@@ -1,0 +1,8 @@
+.error-container {
+    height: 200vh;
+    width: 100%;
+}
+
+.error-image {
+    object-fit: contain ;
+}

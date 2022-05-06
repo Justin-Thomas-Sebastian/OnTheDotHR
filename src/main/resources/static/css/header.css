@@ -26,7 +26,7 @@ header {
 }
 
 header a {
-    color: #E2E2E2;
+    color: white;
     text-decoration: none;
 }
 
@@ -49,7 +49,7 @@ header a:hover {
 }
 
 .login-button-container {
-    border: 2px solid #E2E2E2;
+    border: 2px solid white;
     border-radius: 18px;
     width: 140px;
     height: 50px;
@@ -60,7 +60,8 @@ header a:hover {
 }
 
 .login-button-container:hover {
-    background: #E2E2E2;
+    background-color: white;
+    border: 2px solid white;
 }
 
 .login-button-container:hover a{
