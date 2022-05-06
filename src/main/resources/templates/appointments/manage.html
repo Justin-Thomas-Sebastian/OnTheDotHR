@@ -2,30 +2,68 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>View Employee Apppointments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <title>View Employee Appointments</title>
 </head>
 
 <body>
 <header th:replace="partials/partials.html :: header"></header>
-<h1><span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span>'s Appointments</h1>
-<form th:action="@{/appointments/{id}/create(id=${employee.id})}" method="get">
-    <input type="submit" value="New Appointment">
-</form>
-<div th:switch="${appointments.isEmpty()}">
-    <span th:case="${true}">No appointments</span>
-    <div th:case="*">
-        <div th:each="appointment : ${appointments}">
-            <span th:text="${appointment.title}"></span>
-            <span th:text="${appointment.description}"></span>
-            <span th:text="${appointment.date}"></span>
-            <span th:text="${appointment.time}"></span>
-            <span th:text="${appointment.location}"></span>
-            <span th:text="${appointment.getSupervisor().firstName}"></span>
-            <span th:text="${appointment.getSupervisor().lastName}"></span>
+<div class="mt-2 p-5">
+    <a href="/supervisor-dashboard">Return to supervisor dashboard</a>
+</div>
+
+<div class="container-fluid">
+    <h1><span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span>'s Appointments</h1>
+    <form th:action="@{/appointments/{id}/create(id=${employee.id})}" method="get">
+        <input type="submit" value="New Appointment" class="btn btn-warning">
+    </form>
+</div>
+
+<div class="container-fluid p-5 my-5">
+    <div th:switch="${appointments.isEmpty()}">
+        <h1 th:case="${true}">No appointments</h1>
+        <div th:case="*">
+            <table class="table table-responsive table-dark table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Supervisor first name</th>
+                    <th scope="col">Supervisor last name</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appointment : ${appointments}">
+                        <td th:text="${appointment.id}"></td>
+                        <td th:text="${appointment.title}"></td>
+                        <td th:text="${appointment.description}"></td>
+                        <td th:text="${appointment.date}"></td>
+                        <td th:text="${appointment.time}"></td>
+                        <td th:text="${appointment.location}"></td>
+                        <td th:text="${appointment.getSupervisor().firstName}"></td>
+                        <td th:text="${appointment.getSupervisor().lastName}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-<a href="/supervisor-dashboard">Return to supervisor dashboard</a>
+
+<footer th:replace="partials/partials.html :: footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script src="/js/sidepanel.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>
