@@ -2,44 +2,81 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <link rel="stylesheet" href="/css/header.css">
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <title>Profile</title>
+    <style>
+        #edit-profile-form {
+            width: 400px;
+            border: 1px solid lightgray;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body sec:authorize="isAuthenticated()">
 <header th:replace="partials/partials.html :: header"></header>
-<h1>Profile</h1>
 
-<button id="edit-button">Edit</button>
-<form id="edit-profile-form" th:action="@{/profile/{id}/edit(id=${user.id})}" method="post">
-    <label for="first-name">First Name: </label>
-    <input type="text" name="first-name" id="first-name" class="input-field" th:value="${user.firstName}" readonly><br>
-    <label for="last-name">Last Name: </label>
-    <input type="text" name="last-name" id="last-name" class="input-field" th:value="${user.lastName}" readonly><br>
-    <label for="username">Username: </label>
-    <input type="text" name="username" id="username" class="input-field" th:value="${user.username}" readonly><br>
-    <label for="email">Email: </label>
-    <input type="email" name="email" id="email" class="input-field" th:value="${user.email}" readonly><br>
-    <label for="contact-no">Contact Number: </label>
-    <input type="text" name="contact-no" id="contact-no" class="input-field" th:value="${user.contactNo}" readonly><br>
-    <button id="cancel-button">Cancel</button>
-    <input type="submit" value="Save Changes">
-</form>
-
-<!-- If a profile is accessed from 'view profile' button in supervisor dashboard,
- return link should go back to supervisor dashboard.
- For all other cases, return to dashboard -->
-<div th:switch="${isSupervisor} == true">
-    <div th:case="${true}">
-        <a href="/dashboard">Return to dashboard</a><br>
-        <a href="/supervisor-dashboard">Return to supervisor dashboard</a><br>
-        <form th:action="@{/user/{id}/delete(id=${user.id})}" method="get">
-            <input type="submit" value="Delete Employee">
-        </form>
+<!-- Display both dashboard return for supervisors -->
+<div class="container mt-1">
+    <div th:switch="${isSupervisor} == true">
+        <div th:case="${true}" class="d-flex justify-content-between">
+            <div>
+                <a href="/dashboard">Return to dashboard</a><br>
+                <a href="/supervisor-dashboard">Return to supervisor dashboard</a><br>
+            </div>
+            <div>
+                <form th:action="@{/user/{id}/delete(id=${user.id})}" method="get">
+                    <input type="submit" value="Delete Employee" class="btn btn-danger">
+                </form>
+            </div>
+        </div>
+        <a th:case="*" href="/dashboard">Return to dashboard</a>
     </div>
-    <a th:case="*" href="/dashboard">Return to dashboard</a>
 </div>
 
+<div class="container d-flex flex-column align-items-center justify-content-center my-5">
+    <form id="edit-profile-form" th:action="@{/profile/{id}/edit(id=${user.id})}" method="post" class="p-5">
+        <h1 class="text-center">Edit Profile</h1>
+        <button id="edit-button" class="btn btn-dark mb-3">Edit</button>
+
+        <div class="d-flex">
+            <div class="me-1">
+                <label for="first-name" class="form-label">First Name: </label>
+                <input type="text" name="first-name" id="first-name" class="input-field form-control" th:value="${user.firstName}" readonly>
+            </div>
+            <div class="ms-1">
+                <label for="last-name" class="form-label">Last Name: </label>
+                <input type="text" name="last-name" id="last-name" class="input-field form-control" th:value="${user.lastName}" readonly>
+            </div>
+        </div>
+
+        <label for="username" class="form-label">Username: </label>
+        <input type="text" name="username" id="username" class="input-field form-control" th:value="${user.username}" readonly>
+
+        <label for="email" class="form-label">Email: </label>
+        <input type="email" name="email" id="email" class="input-field form-control" th:value="${user.email}" readonly>
+
+        <label for="contact-no" class="form-label">Contact Number: </label>
+        <input type="text" name="contact-no" id="contact-no" class="input-field form-control" th:value="${user.contactNo}" readonly><br>
+
+        <div class="d-flex justify-content-evenly align-items-center">
+            <button id="cancel-button" class="btn btn-outline-danger">Cancel</button>
+            <input type="submit" value="Save Changes" class="btn btn-outline-success">
+        </div>
+    </form>
+</div>
+
+<footer th:replace="partials/partials.html :: footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script src="/js/sidepanel.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     $("#edit-button").click(function(e){
@@ -52,5 +89,6 @@
         location.reload();
     });
 </script>
+
 </body>
 </html>
