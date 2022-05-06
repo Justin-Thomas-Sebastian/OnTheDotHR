@@ -10,17 +10,6 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/footer.css">
     <title>Dashboard</title>
-    <style>
-        .btn-custom-green {
-            background-color: #384D48;
-            color: white;
-        }
-
-        .btn-custom-green:hover {
-            background-color: #426b65;
-            color: white;
-        }
-    </style>
 </head>
 
 <body sec:authorize="isAuthenticated()">
@@ -50,16 +39,15 @@
     <hr class="bg-dark mt-5">
 </div>
 
-
 <!-- Display appointments section -->
 <div id="employee-appointments" class="mt-5 container-fluid px-5">
-    <h1 class="mb-5">Upcoming Appointments</h1>
+    <h2 class="mb-5">Upcoming Appointments</h2>
     <div th:switch="${appointments.isEmpty() && supervisorAppointments.isEmpty()}">
         <h6 th:case="${true}" class="text-center">No scheduled appointments</h6>
         <div th:case="*">
 
             <!-- Display employee's approved and upcoming appointments with their supervisor -->
-            <table class="table table-bordered table-dark">
+            <table class="table table-bordered table-dark table-responsive">
                 <thead>
                     <tr class="text-center">
                         <th scope="col">Title</th>
@@ -119,13 +107,13 @@
 
 <!-- Employee current deliverables section -->
 <div id="employee-deliverables" class="my-5 container-fluid px-5">
-    <h1>Deliverables</h1>
+    <h2>Deliverables</h2>
     <div th:switch="${deliverables.isEmpty()}" class="mx-5">
         <h5 th:case="${true}" class="text-success">You are all caught up!</h5>
         <h5 th:case="*" class="text-danger">You got stuff to do!</h5>
     </div>
 
-    <table class="table table-bordered table-dark mb-5">
+    <table class="table table-bordered table-dark table-responsive mb-5">
         <thead>
             <tr class="text-center">
                 <th scope="col">Id</th>

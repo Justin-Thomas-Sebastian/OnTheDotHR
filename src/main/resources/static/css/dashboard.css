@@ -6,3 +6,14 @@
     display: flex;
     justify-content: space-between;
 }
+
+.btn-custom-green {
+    background-color: #384D48;
+    height: 40px;
+    color: white;
+}
+
+.btn-custom-green:hover {
+    background-color: #426b65;
+    color: white;
+}

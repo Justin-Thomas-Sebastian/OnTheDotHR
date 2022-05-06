@@ -46,8 +46,14 @@
 }
 
 /* Demo/info section */
+.demo-img-container {
+    max-width: 800px;
+}
+
 .demo-img {
-    max-width: 600px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     border: 1px solid black;
 }
 
@@ -59,7 +65,7 @@
 }
 
 #testimonial-img {
-    max-width: 600px;
+    max-width: 400px;
 }
 
 /* Testimonial block quote */
