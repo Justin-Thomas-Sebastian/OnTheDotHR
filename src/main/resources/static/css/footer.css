@@ -1,0 +1,25 @@
+/* FOOTER */
+#main-footer {
+    background-color: #384D48;;
+}
+
+#main-footer p {
+    color: #ffffff;
+}
+
+#footer-site-map{
+    width: 300px;
+}
+
+#footer-site-map li {
+    list-style-type: none;
+}
+
+#footer-site-map a {
+    color: #ffc107;
+}
+
+#footer-site-map a:hover {
+    color: #e7ca73;
+    text-decoration: underline;
+}

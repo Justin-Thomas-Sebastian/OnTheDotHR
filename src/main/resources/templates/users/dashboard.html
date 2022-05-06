@@ -2,109 +2,168 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <title>Dashboard</title>
+    <style>
+        .btn-custom-green {
+            background-color: #384D48;
+            color: white;
+        }
+
+        .btn-custom-green:hover {
+            background-color: #426b65;
+            color: white;
+        }
+    </style>
 </head>
 
 <body sec:authorize="isAuthenticated()">
-    <header th:replace="partials/partials.html :: header"></header>
+<header th:replace="partials/partials.html :: header"></header>
 
-    <h1>Dashboard</h1>
-    <span th:text="${user.getFirstName()}"></span>&nbsp;<span th:text="${user.getLastName()}"></span><br>
+<div class="container-fluid">
+    <h1 class="my-5">Employee Dashboard</h1>
+    <h4 class="mb-3 mx-5">Welcome,&nbsp;<span th:text="${user.getFirstName()}"></span>&nbsp;<span th:text="${user.getLastName()}"></span></h4>
 
     <!-- If user has a supervisor, display that supervisor's name -->
-    <div th:switch="${supervisor == null}">
+    <div class="mb-3 mx-5" th:switch="${supervisor == null}">
         <span th:case="${true}"></span>
         <span th:case="*">
-            <span>Supervisor: </span>
-            <span th:text="${supervisor.getFirstName()}"></span>&nbsp;
-            <span th:text="${supervisor.getLastName()}"></span><br>
-        </span>
+        <span>Supervisor: </span>
+        <span th:text="${supervisor.getFirstName()}"></span>&nbsp;
+        <span th:text="${supervisor.getLastName()}"></span><br>
+    </span>
     </div>
 
     <!-- Only show supervisor dashboard button to supervisors -->
     <div th:switch="${user.isSupervisor()}">
         <form th:case="${true}" method="get" action="/supervisor-dashboard">
-            <input type="submit" value="Supervisor Dashboard">
+            <input type="submit" value="Supervisor Dashboard" class="btn btn-custom-green mx-5">
         </form>
         <span th:case="*"></span>
     </div>
+    <hr class="bg-dark mt-5">
+</div>
 
-    <!-- Display appointments section -->
-    <div id="employee-appointments">
-        <h1>Upcoming Appointments</h1>
-        <div th:switch="${appointments.isEmpty() && supervisorAppointments.isEmpty()}">
-            <div th:case="${true}">No scheduled appointments</div>
-            <div th:case="*">
-                <!-- Display employee's approved and upcoming appointments with their supervisor -->
-                <div th:each="appointment : ${appointments}">
-                    <span th:text="${appointment.title}"></span>
-                    <span th:text="${appointment.description}"></span>
-                    <span th:text="${appointment.date}"></span>
-                    <span th:text="${appointment.time}"></span>
-                    <span th:text="${appointment.location}"></span>
-                    <span th:text="${supervisor.firstName}"></span>
-                    <span th:text="${supervisor.lastName}"></span>
 
-                    <!-- Cancel appointment -->
-                    <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post" style="display:inline;">
-                        <input type="submit" value="Cancel" class="btn btn-danger">
-                    </form>
-                </div>
+<!-- Display appointments section -->
+<div id="employee-appointments" class="mt-5 container-fluid px-5">
+    <h1 class="mb-5">Upcoming Appointments</h1>
+    <div th:switch="${appointments.isEmpty() && supervisorAppointments.isEmpty()}">
+        <h6 th:case="${true}" class="text-center">No scheduled appointments</h6>
+        <div th:case="*">
 
-                <!-- Supervisor's appointments with their employees -->
-                <div th:each="appointment : ${supervisorAppointments}">
-                    <span th:text="${appointment.title}"></span>
-                    <span th:text="${appointment.description}"></span>
-                    <span th:text="${appointment.date}"></span>
-                    <span th:text="${appointment.time}"></span>
-                    <span th:text="${appointment.location}"></span>
-                    <span th:text="${appointment.employee.firstName}"></span>
-                    <span th:text="${appointment.employee.lastName}"></span>
-
-                    <!-- Cancel supervisor appointment -->
-                    <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post" style="display:inline;">
-                        <input type="submit" value="Cancel" class="btn btn-danger">
-                    </form>
-                </div>
-            </div> <!-- End appointments switch default case -->
-        </div>
+            <!-- Display employee's approved and upcoming appointments with their supervisor -->
+            <table class="table table-bordered table-dark">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Cancel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="appointment : ${appointments}">
+                        <td th:text="${appointment.title}"></td>
+                        <td th:text="${appointment.description}"></td>
+                        <td th:text="${appointment.date}"></td>
+                        <td th:text="${appointment.time}"></td>
+                        <td th:text="${appointment.location}"></td>
+                        <td th:text="${supervisor.firstName}"></td>
+                        <td th:text="${supervisor.lastName}"></td>
+                        <td class="text-center">
+                            <!-- Cancel appointment -->
+                            <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post" style="display:inline;">
+                                <input type="submit" value="Cancel" class="btn btn-danger">
+                            </form>
+                        </td>
+                    </tr>
+                    <!-- Supervisor's appointments with their employees -->
+                    <tr th:each="appointment : ${supervisorAppointments}">
+                        <td th:text="${appointment.title}"></td>
+                        <td th:text="${appointment.description}"></td>
+                        <td th:text="${appointment.date}"></td>
+                        <td th:text="${appointment.time}"></td>
+                        <td th:text="${appointment.location}"></td>
+                        <td th:text="${appointment.employee.firstName}"></td>
+                        <td th:text="${appointment.employee.lastName}"></td>
+                        <td class="text-center">
+                            <!-- Cancel supervisor appointment -->
+                            <form th:action="@{/cancel-appointment/{id}(id=${appointment.id})}" method="post" style="display:inline;">
+                                <input type="submit" value="Cancel" class="btn btn-danger">
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> <!-- End appointments switch default case -->
     </div>
+</div>
 
-    <!-- Button to request an appointment -->
+<!-- Button to request an appointment -->
+<div class="container text-center">
     <form action="/request-appointment" method="get">
-        <input type="submit" value="Request Appointment">
+        <input type="submit" value="Request Appointment" class="btn btn-warning rounded-pill px-5 py-3">
     </form>
+</div>
 
-    <!-- Employee current deliverables section -->
-    <div id="employee-deliverables">
-        <h1>Deliverables</h1>
-        <div th:switch="${deliverables.isEmpty()}">
-            <span th:case="${true}">You are all caught up!</span>
-            <span th:case="*">You got stuff to do!</span>
-        </div>
-        <div th:each="deliverable : ${deliverables}">
-            <span th:text="${deliverable.id}"></span>
-            <span th:text="${deliverable.title}"></span>
-            <span th:text="${deliverable.description}"></span>
-            <span th:text="${deliverable.dateCreated}"></span>
-            <span th:text="${deliverable.deadline}"></span>
-            <span th:with="category = ${deliverable.getCategory()}" th:text="${category.getCategoryName()}"></span>
-            <span th:with="status = ${deliverable.getStatus()}" th:text="${status.getStatusName()}"></span>
-            <form style="display: inline;" th:action="@{/details/{id}(id=${deliverable.id})}" method="get">
-                <input type="submit" value="Details">
-            </form>
-        </div>
+<!-- Employee current deliverables section -->
+<div id="employee-deliverables" class="my-5 container-fluid px-5">
+    <h1>Deliverables</h1>
+    <div th:switch="${deliverables.isEmpty()}" class="mx-5">
+        <h5 th:case="${true}" class="text-success">You are all caught up!</h5>
+        <h5 th:case="*" class="text-danger">You got stuff to do!</h5>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous">
-    </script>
+    <table class="table table-bordered table-dark mb-5">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Deadline</th>
+                <th scope="col">Category</th>
+                <th scope="col">Status</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="deliverable : ${deliverables}">
+                <td th:text="${deliverable.id}"></td>
+                <td th:text="${deliverable.title}"></td>
+                <td th:text="${deliverable.description}"></td>
+                <td th:text="${deliverable.dateCreated}"></td>
+                <td th:text="${deliverable.deadline}"></td>
+                <td th:with="category = ${deliverable.getCategory()}" th:text="${category.getCategoryName()}"></td>
+                <td th:with="status = ${deliverable.getStatus()}" th:text="${status.getStatusName()}"></td>
+                <td class="text-center">
+                    <form style="display: inline;" th:action="@{/details/{id}(id=${deliverable.id})}" method="get">
+                        <input type="submit" value="Details" class="btn btn-custom-green">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="my-5 p-5"></div>
+<footer th:replace="partials/partials.html :: footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script src="/js/sidepanel.js"></script>
 </body>
 </html>

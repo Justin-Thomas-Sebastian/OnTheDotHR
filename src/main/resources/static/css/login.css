@@ -8,8 +8,7 @@ body {
 }
 
 #login-form {
-    background-color: #d8d4d5;
-    border: 1px solid lightgray;
+    background-color: #eaeaea;
     border-radius: 10px;
 }
 
@@ -44,7 +43,7 @@ img {
 /* Fading animation */
 .fade {
     animation-name: fade;
-    animation-duration: 4.5s;
+    animation-duration: 4s;
 }
 
 @keyframes fade {
