@@ -2,10 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <style>
         .hide {
             display: none;
+        }
+
+        #new-task-form {
+            border: 1px solid lightgray;
+            width: 500px;
+            border-radius: 10px;
         }
     </style>
     <title>Create deliverable</title>
@@ -14,67 +25,76 @@
 <body sec:authorize="isAuthenticated()">
 <header th:replace="partials/partials.html :: header"></header>
 
+<div class="text-end mt-3">
+    <a href="/supervisor-dashboard">Return to supervisor dashboard</a>
+</div>
+
 <!-- FORM TO CREATE NEW DELIVERABLE AND ASSIGN TO EMPLOYEE -->
-<h1>New task for <span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span></h1>
+<div class="container d-flex justify-content-center align-items-center my-5">
+    <form id="new-task-form" th:action="@{/deliverables/{id}/create(id=${employee.id})}" th:object="${deliverable}" method="post" class="p-3">
+        <h3 class="text-center">New task for <span th:text="${employee.firstName}"></span>&nbsp;<span th:text="${employee.lastName}"></span></h3>
+        <!-- Title -->
+        <label for="title" class="form-label">Title</label>
+        <input id="title" name="title" type="text" required class="form-control mb-4">
 
-<form id="new-task-form" th:action="@{/deliverables/{id}/create(id=${employee.id})}" th:object="${deliverable}" method="post">
-    <!-- Title -->
-    <label for="title">Title</label><br>
-    <input id="title" name="title" type="text" required><br>
+        <!-- Category --->
+        <label for="categorySelect" class="form-label">Category</label>
+        <select name="categorySelect" id="categorySelect" required class="form-select mb-4">
+            <option value="" selected disabled hidden>Select category</option>
+            <option th:each="option : ${categoryOptions}" th:value="${option}" th:text="${option}"></option>
+        </select>
 
-    <!-- Category --->
-    <label for="categorySelect">Category</label><br>
-    <select name="categorySelect" id="categorySelect" required>
-        <option value="" selected disabled hidden>Select category</option>
-        <option th:each="option : ${categoryOptions}" th:value="${option}" th:text="${option}"></option>
-    </select><br>
+        <!-- Description --->
+        <label for="description" class="form-label">Description</label><br>
+        <textarea id="description" name="description" required class="form-control mb-3"></textarea><br>
 
-    <!-- Description --->
-    <label for="description">Description</label><br>
-    <textarea id="description" name="description" cols="30" rows="10" required></textarea><br>
+        <!-- Deadline --->
+        <label for="deadline" class="form-label">Deadline</label><br>
+        <input id="deadline" name="deadline" type="date" required><br>
 
-    <!-- Deadline --->
-    <label for="deadline"></label><br>
-    <input id="deadline" name="deadline" type="date" required><br>
-
-    <!-- Upload Files--->
-    <h3>Upload Files</h3>
-    <div id="new-files">
-        <div class="file-input-container hide">
-            <input id="filename1" name="filename1" type="text" class="file-name-input" readonly>
-            <input id="fileurl1" name="fileurl1" type="text" class="file-url-input" readonly>
-            <button class="delete-button">Remove</button>
+        <!-- Upload Files--->
+        <h6 class="mt-4">Upload Files</h6>
+        <div id="new-files">
+            <div class="file-input-container hide">
+                <input id="filename1" name="filename1" type="text" class="file-name-input" readonly>
+                <input id="fileurl1" name="fileurl1" type="text" class="file-url-input" readonly>
+                <button class="delete-button btn btn-danger">Remove</button>
+            </div>
+            <div class="file-input-container hide">
+                <input id="filename2" name="filename2" type="text" class="file-name-input" readonly>
+                <input id="fileurl2" name="fileurl2" type="text" class="file-url-input" readonly>
+                <button class="delete-button btn btn-danger">Remove</button>
+            </div>
+            <div class="file-input-container hide">
+                <input id="filename3" name="filename3" type="text" class="file-name-input" readonly>
+                <input id="fileurl3" name="fileurl3" type="text" class="file-url-input" readonly>
+                <button class="delete-button btn btn-danger">Remove</button>
+            </div>
+            <div class="file-input-container hide">
+                <input id="filename4" name="filename4" type="text" class="file-name-input" readonly>
+                <input id="fileurl4" name="fileurl4" type="text" class="file-url-input" readonly>
+                <button class="delete-button btn btn-danger">Remove</button>
+            </div>
+            <div class="file-input-container hide">
+                <input id="filename5" name="filename5" type="text" class="file-name-input" readonly>
+                <input id="fileurl5" name="fileurl5" type="text" class="file-url-input" readonly>
+                <button class="delete-button btn btn-danger">Remove</button>
+            </div>
+            <button id="file-picker" class="btn btn-primary">Attach</button><br>
         </div>
-        <div class="file-input-container hide">
-            <input id="filename2" name="filename2" type="text" class="file-name-input" readonly>
-            <input id="fileurl2" name="fileurl2" type="text" class="file-url-input" readonly>
-            <button class="delete-button">Remove</button>
-        </div>
-        <div class="file-input-container hide">
-            <input id="filename3" name="filename3" type="text" class="file-name-input" readonly>
-            <input id="fileurl3" name="fileurl3" type="text" class="file-url-input" readonly>
-            <button class="delete-button">Remove</button>
-        </div>
-        <div class="file-input-container hide">
-            <input id="filename4" name="filename4" type="text" class="file-name-input" readonly>
-            <input id="fileurl4" name="fileurl4" type="text" class="file-url-input" readonly>
-            <button class="delete-button">Remove</button>
-        </div>
-        <div class="file-input-container hide">
-            <input id="filename5" name="filename5" type="text" class="file-name-input" readonly>
-            <input id="fileurl5" name="fileurl5" type="text" class="file-url-input" readonly>
-            <button class="delete-button">Remove</button>
-        </div>
-        <button id="file-picker">Attach</button><br>
-    </div>
+        <input type="submit" value="Create new Task" class="btn btn-outline-success w-100 mt-5">
+    </form>
+</div>
 
-    <input type="submit" value="Create new Task ">
-</form>
-<a href="/supervisor-dashboard">Return to supervisor dashboard</a>
-
+<footer th:replace="partials/partials.html :: footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/js/keys.js"></script>
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script src="/js/sidepanel.js"></script>
 <script>
     const client = filestack.init(FILESTACK_KEY);
     const filePicker = document.getElementById("file-picker");
