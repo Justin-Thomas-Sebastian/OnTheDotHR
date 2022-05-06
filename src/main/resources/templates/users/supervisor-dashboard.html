@@ -49,19 +49,19 @@
                 <td class="d-flex justify-content-around">
                     <!-- View employee's profile -->
                     <form style="display:inline;" th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
-                        <input type="submit" value="View Profile" class="btn btn-info">
+                        <input type="submit" value="Profile" class="btn btn-outline-info">
                     </form>
                     <!-- View employees current deliverables -->
                     <form style="display:inline;" th:action="@{/deliverables/{id}(id=${employee.id})}" th:method="get">
-                        <input type="submit" value="Current Tasks" class="btn btn-info">
+                        <input type="submit" value="Current Tasks" class="btn btn-outline-danger">
                     </form>
                     <!-- Create a new deliverable and assign to employee -->
                     <form style="display:inline;" th:action="@{/deliverables/{id}/create(id=${employee.id})}" method="get">
-                        <input type="submit" value="New Task" class="btn btn-info">
+                        <input type="submit" value="New Task" class="btn btn-outline-light">
                     </form>
                     <!-- View/Create Appointments -->
                     <form style="display:inline;" th:action="@{/appointments/{id}/manage(id=${employee.id})}" method="get">
-                        <input type="submit" value="Appointments" class="btn btn-info">
+                        <input type="submit" value="Appointments" class="btn btn-outline-warning">
                     </form>
                 </td>
             </tr>
@@ -108,11 +108,11 @@
                 <td class="text-center d-flex justify-content-around">
                     <!-- View employee's profile -->
                     <form style="display:inline;" th:action="@{/profile/{id}(id=${employee.id})}" th:method="get">
-                        <input type="submit" value="View Profile" class="btn btn-info">
+                        <input type="submit" value="Profile" class="btn btn-outline-info">
                     </form>
 
                     <form style="display:inline;" th:action="@{/assign/{id}(id=${employee.id})}" th:method="post">
-                        <input type="submit" value="Assign to your Team" class="btn btn-custom-green">
+                        <input type="submit" value="Assign to your Team" class="btn btn-success">
                     </form>
                 </td>
             </tr>
