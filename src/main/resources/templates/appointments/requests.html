@@ -2,33 +2,71 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <link rel="stylesheet" href="/css/header.css">
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <title>Appointment Requests</title>
+    <style>
+
+    </style>
 </head>
 
 <body sec:authorize="isAuthenticated()">
-    <header th:replace="partials/partials.html :: header"></header>
-    <h1>Appointment Requests</h1>
-    <div th:each="appointment : ${appointmentRequestList}">
-        <span th:text="${appointment.employee.getFirstName()}">&nbsp;</span>
-        <span th:text="${appointment.employee.getLastName()}"></span>
-        <span th:text="${appointment.id}"></span>
-        <span th:text="${appointment.title}"></span>
-        <span th:text="${appointment.description}"></span>
-        <span th:text="${appointment.date}"></span>
-        <span th:text="${appointment.time}"></span>
-        <span th:text="${appointment.location}"></span>
-
-        <form method="post" th:action="@{/appointments/{id}/update-status(id=${appointment.id})}" style="display: inline">
-            <select name="statusSelect" id="statusSelect" required>
-                <option value="" selected disabled hidden th:text="${appointment.status.getStatusName()}"></option>
-                <option th:each="option : ${statusOptions}" th:value="${option}" th:text="${option}"></option>
-            </select>
-            <input type="submit" value="Update">
-        </form>
-    </div>
-
+<header th:replace="partials/partials.html :: header"></header>
+<div class="mt-5 p-5">
     <a href="/supervisor-dashboard">Return to supervisor dashboard</a>
+</div>
+
+<div class="container-fluid p-5 my-5">
+    <h1>Appointment Requests</h1>
+    <table class="table table-bordered table-dark table-responsive">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Location</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="appointment : ${appointmentRequestList}">
+                <td th:text="${appointment.id}"></td>
+                <td th:text="${appointment.employee.getFirstName()}"></td>
+                <td th:text="${appointment.employee.getLastName()}"></td>
+                <td th:text="${appointment.title}"></td>
+                <td th:text="${appointment.description}"></td>
+                <td th:text="${appointment.date}"></td>
+                <td th:text="${appointment.time}"></td>
+                <td th:text="${appointment.location}"></td>
+                <td>
+                    <form method="post" th:action="@{/appointments/{id}/update-status(id=${appointment.id})}" style="display: inline">
+                        <select name="statusSelect" id="statusSelect" required class="form-select">
+                            <option value="" selected disabled hidden th:text="${appointment.status.getStatusName()}"></option>
+                            <option th:each="option : ${statusOptions}" th:value="${option}" th:text="${option}"></option>
+                        </select>
+                        <input type="submit" value="Update" class="btn btn-primary w-100 mt-2">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="partials/partials.html :: footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+<script src="/js/sidepanel.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>
