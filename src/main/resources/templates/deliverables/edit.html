@@ -2,10 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <style>
         .hide {
             display: none;
+        }
+
+        #deliverable-info {
+            border: 1px solid lightgray;
+            border-radius: 10px;
         }
     </style>
     <title>Edit deliverable</title>
@@ -13,28 +23,39 @@
 
 <body sec:authorize="isAuthenticated()">
 <header th:replace="partials/partials.html :: header"></header>
-    <h1>Task Submission</h1>
 
-    <form id="deliverable-info" th:action="@{/deliverables/{id}/edit(id=${deliverable.id})}" method="post">
-        <label for="title">Title</label><br>
-        <input id="title" name="title" type="text" th:value="${deliverable.title}" readonly><br>
+<div class="text-end mt-3">
+    <a href="/supervisor-dashboard">Return to supervisor dashboard</a>
+</div>
 
-        <label for="category">Category</label><br>
-        <input id="category" name="category" type="text" th:value="${deliverable.category.getCategoryName()}" readonly><br>
+<div class="container d-flex justify-content-center align-items-center my-5">
+    <form id="deliverable-info" th:action="@{/deliverables/{id}/edit(id=${deliverable.id})}" method="post" class="p-5">
+        <h1>Task Submission</h1>
+        <!-- Title -->
+        <label for="title" class="form-label">Title</label>
+        <input id="title" name="title" type="text" th:value="${deliverable.title}" readonly class="form-control">
 
-        <label for="status">Status</label><br>
-        <input id="status" name="status" type="text" th:value="${deliverable.status.getStatusName()}" readonly><br>
+        <!-- Category -->
+        <label for="category" class="form-label">Category</label><br>
+        <input id="category" name="category" type="text" th:value="${deliverable.category.getCategoryName()}" readonly class="form-control">
 
-        <label for="description">Description</label><br>
-        <textarea id="description" name="description" th:text="${deliverable.description}"></textarea><br>
+        <!-- Status -->
+        <label for="status" class="form-label">Status</label><br>
+        <input id="status" name="status" type="text" th:value="${deliverable.status.getStatusName()}" readonly class="form-control">
 
-        <label for="last-active">Last Updated</label><br>
-        <input id="last-active" name="last-active" type="text" th:value="${deliverable.lastActive}" readonly><br>
+        <!-- Description -->
+        <label for="description" class="form-label">Description</label><br>
+        <textarea id="description" name="description" th:text="${deliverable.description}" class="form-control"></textarea>
 
-        <label for="deadline">Deadline</label><br>
-        <input id="deadline" name="deadline" type="text" th:value="${deliverable.deadline}" readonly><br>
+        <!-- Last Updated -->
+        <label for="last-active" class="form-label">Last Updated</label><br>
+        <input id="last-active" name="last-active" type="text" th:value="${deliverable.lastActive}" readonly class="form-control">
 
-        <h3>Attachments</h3>
+        <!-- Deadline -->
+        <label for="deadline" class="form-label">Deadline</label><br>
+        <input id="deadline" name="deadline" type="text" th:value="${deliverable.deadline}" readonly class="form-control">
+
+        <h6>Attachments</h6>
         <div th:each="attachment : ${attachments}">
             <a th:href="${attachment.fileUrl}" th:text="${attachment.fileName}" download></a>
         </div>
@@ -45,38 +66,46 @@
             <div class="file-input-container hide">
                 <input id="filename1" name="filename1" type="text" class="file-name-input" readonly>
                 <input id="fileurl1" name="fileurl1" type="text" class="file-url-input" hidden readonly>
-                <button class="delete-button">Remove</button>
+                <button class="delete-button btn btn-danger">Remove</button>
             </div>
             <div class="file-input-container hide">
                 <input id="filename2" name="filename2" type="text" class="file-name-input" readonly>
                 <input id="fileurl2" name="fileurl2" type="text" class="file-url-input" hidden readonly>
-                <button class="delete-button">Remove</button>
+                <button class="delete-button btn btn-danger">Remove</button>
             </div>
             <div class="file-input-container hide">
                 <input id="filename3" name="filename3" type="text" class="file-name-input" readonly>
                 <input id="fileurl3" name="fileurl3" type="text" class="file-url-input"  hidden readonly>
-                <button class="delete-button">Remove</button>
+                <button class="delete-button btn btn-danger">Remove</button>
             </div>
             <div class="file-input-container hide">
                 <input id="filename4" name="filename4" type="text" class="file-name-input" readonly>
                 <input id="fileurl4" name="fileurl4" type="text" class="file-url-input"  hidden readonly>
-                <button class="delete-button">Remove</button>
+                <button class="delete-button btn btn-danger">Remove</button>
             </div>
             <div class="file-input-container hide">
                 <input id="filename5" name="filename5" type="text" class="file-name-input" readonly>
                 <input id="fileurl5" name="fileurl5" type="text" class="file-url-input" hidden readonly>
-                <button class="delete-button">Remove</button>
+                <button class="delete-button btn btn-danger">Remove</button>
             </div>
         </div>
-        <button id="file-picker">Attach</button><br>
-        <input type="submit" name="submit-name" value="save">
-        <input type="submit" name="submit-name" value="submit">
+        <button id="file-picker" class="btn btn-outline-primary w-100 mb-3">Attach</button>
+        <div class="d-flex justify-content-evenly align-items-center">
+            <input type="submit" name="submit-name" value="save" class="btn btn-outline-dark">
+            <input type="submit" name="submit-name" value="submit" class="btn btn-outline-success">
+        </div>
     </form>
-    <a href="/dashboard">Return to dashboard</a>
+</div>
 
+<footer th:replace="partials/partials.html :: footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/js/keys.js"></script>
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script src="/js/sidepanel.js"></script>
 <script>
     const client = filestack.init(FILESTACK_KEY);
     const filePicker = document.getElementById("file-picker");
