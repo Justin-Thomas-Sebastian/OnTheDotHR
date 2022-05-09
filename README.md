@@ -1,3 +1,2 @@
 # OnTheDotHR
-Talent management software for appointment scheduling and deliverables tracking. Provides HR personnel and managers tools to plan and oversee employee activities.
-Deliverables tracker viewable by authenticated users, ensuring crystal clear requirements and deadlines.
+Full-stack web application that provides HR personnel and supervisors, tools to plan and oversee employee activities. Includes an appointments scheduler and task tracker, ensuring clear requirements and deadlines for all employees.
